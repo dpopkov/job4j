@@ -15,4 +15,13 @@ public class Calculate {
         System.out.println("Hello World");
     }
     
+    /**
+     * Method echo.
+     * @param name your name
+     * @return echo plus your name
+     */
+    public String echo(String name) {
+        return "Echo, echo, echo: " + name;
+    }
+    
 }
