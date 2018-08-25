@@ -1,27 +1,56 @@
 package ru.job4j.calculate;
 
 /**
- * Calculate.
+ * Simple calculator that can add, subtract, divide and multiply.
+ * The result of the last calculation can be obtained using the {@code getResult}
+ * method.
  *
  * @author Denis Popkov
  */
 public class Calculate {
-    
+    private double result;
+
     /**
-     * Entry point to application.
-     * @param args array of string arguments
+     * Gets result of the last calculation.
+     * @return result of the last calculation
      */
-    public static void main(String[] args) {
-        System.out.println("Hello World");
+    public double getResult() {
+        return this.result;
     }
-    
+
     /**
-     * Method echo.
-     * @param name your name
-     * @return echo plus your name
+     * Adds two values.
+     * @param first first value
+     * @param second second value
      */
-    public String echo(String name) {
-        return "Echo, echo, echo: " + name;
+    public void add(double first, double second) {
+        this.result = first + second;
     }
-    
+
+    /**
+     * Subtracts one value from another.
+     * @param first the value from which the other value is subtracted
+     * @param second subtraction value
+     */
+    public void subtract(double first, double second) {
+        this.result = first - second;
+    }
+
+    /**
+     * Divides one value by another.
+     * @param dividend dividend value
+     * @param divider divisor value
+     */
+    public void div(double dividend, double divider) {
+        this.result = dividend / divider;
+    }
+
+    /**
+     * Multiplies two values.
+     * @param first first value
+     * @param second second value
+     */
+    public void multiply(double first, double second) {
+        this.result = first * second;
+    }
 }
