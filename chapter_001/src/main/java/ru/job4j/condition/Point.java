@@ -27,21 +27,4 @@ public class Point {
     public double distanceTo(Point that) {
         return Math.sqrt(Math.pow(this.x - that.x, 2) + Math.pow(this.y - that.y, 2));
     }
-
-    /**
-     * Entry point to application.
-     * @param args not used
-     */
-    public static void main(String[] args) {
-        Point a = new Point(0, 1);
-        Point b = new Point(2, 5);
-
-        System.out.println("x1 = " + a.x);
-        System.out.println("y1 = " + a.y);
-        System.out.println("x2 = " + b.x);
-        System.out.println("y2 = " + b.y);
-
-        double distance = a.distanceTo(b);
-        System.out.printf("Distance between points a and b: %f%n", distance);
-    }
 }
