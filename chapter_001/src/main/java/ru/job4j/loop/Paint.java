@@ -1,5 +1,7 @@
 package ru.job4j.loop;
 
+import java.util.function.BiPredicate;
+
 /**
  * Contains methods of painting geometric shapes.
  *
@@ -14,22 +16,8 @@ public class Paint {
      * @return pyramid as string of characters
      */
     public String pyramid(int height) {
-        StringBuilder builder = new StringBuilder();
-        int width = height * 2 - 1;
-        int left, right;
-        for (int row = 0; row < height; row++) {
-            left = height - 1 - row;
-            right = height - 1 + row;
-            for (int col = 0; col < width; col++) {
-                if (col >= left && col <= right) {
-                    builder.append("^");
-                } else {
-                    builder.append(" ");
-                }
-            }
-            builder.append(NEW_LINE);
-        }
-        return builder.toString();
+        return this.loopBy(height, 2 * height - 1,
+                (row, col) -> col >= height - 1 - row && col <= height - 1 + row);
     }
 
     /**
@@ -38,19 +26,8 @@ public class Paint {
      * @return right triangle as string of characters
      */
     public String rightTrl(int height) {
-        StringBuilder builder = new StringBuilder();
-        int width = height;
-        for (int row = 0; row < height; row++) {
-            for (int col = 0; col < width; col++) {
-                if (col <= row) {
-                    builder.append("^");
-                } else {
-                    builder.append(" ");
-                }
-            }
-            builder.append(NEW_LINE);
-        }
-        return builder.toString();
+        return this.loopBy(height, height,
+                (row, col) -> col <= row);
     }
 
     /**
@@ -59,18 +36,22 @@ public class Paint {
      * @return left triangle as string of characters
      */
     public String leftTrl(int height) {
-        StringBuilder builder = new StringBuilder();
-        int width = height;
+        return this.loopBy(height, height,
+                (row, col) -> col >= (height - row - 1));
+    }
+
+    private String loopBy(int height, int width, BiPredicate<Integer, Integer> predicate) {
+        StringBuilder screen = new StringBuilder();
         for (int row = 0; row < height; row++) {
             for (int col = 0; col < width; col++) {
-                if (col >= (height - row - 1)) {
-                    builder.append("^");
+                if (predicate.test(row, col)) {
+                    screen.append("^");
                 } else {
-                    builder.append(" ");
+                    screen.append(" ");
                 }
             }
-            builder.append(NEW_LINE);
+            screen.append(NEW_LINE);
         }
-        return builder.toString();
+        return screen.toString();
     }
 }
