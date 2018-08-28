@@ -14,6 +14,32 @@ public class PaintTest {
     private static final String NEW_LINE = System.lineSeparator();
 
     @Test
+    public void whenPyramid4Right() {
+        Paint paint = new Paint();
+        String pyramid = paint.rightTrl(4);
+        String expected = new StringJoiner(NEW_LINE, "", NEW_LINE)
+                .add("^   ")
+                .add("^^  ")
+                .add("^^^ ")
+                .add("^^^^")
+                .toString();
+        assertThat(pyramid, is(expected));
+    }
+
+    @Test
+    public void whenPyramid4Left() {
+        Paint paint = new Paint();
+        String pyramid = paint.leftTrl(4);
+        String expected = new StringJoiner(NEW_LINE, "", NEW_LINE)
+                .add("   ^")
+                .add("  ^^")
+                .add(" ^^^")
+                .add("^^^^")
+                .toString();
+        assertThat(pyramid, is(expected));
+    }
+
+    @Test
     public void whenHeightIs2() {
         Paint paint = new Paint();
         String pyramid = paint.pyramid(2);
