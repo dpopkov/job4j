@@ -14,17 +14,11 @@ public class MatrixCheck {
      */
     public boolean mono(boolean[][] data) {
         boolean result = true;
-        int size = data.length, i, j;
-        boolean first = data[0][0];
-        for (i = 1, j = 1; i < size; i++, j++) {
-            if (data[i][j] != first) {
-                result = false;
-                break;
-            }
-        }
-        first = data[0][size - 1];
-        for (i = 1, j = size - 2; i < size; i++, j--) {
-            if (data[i][j] != first) {
+        int size = data.length, i, j, k;
+        boolean left = data[0][0];
+        boolean right = data[0][size - 1];
+        for (i = 1, j = 1, k = size - 2; i < size; i++, j++, k--) {
+            if (data[i][j] != left || data[i][k] != right) {
                 result = false;
                 break;
             }
