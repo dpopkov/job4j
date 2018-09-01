@@ -26,4 +26,13 @@ public class ArrayDuplicateTest {
         String[] expected = "acdb".split("");
         assertThat(result, is(expected));
     }
+
+    @Test
+    public void whenOneElementThenDoNotRemove() {
+        ArrayDuplicate arrayDuplicate = new ArrayDuplicate();
+        String[] input = {"a"};
+        String[] result = arrayDuplicate.remove(input);
+        String[] expected = {"a"};
+        assertThat(result, is(expected));
+    }
 }

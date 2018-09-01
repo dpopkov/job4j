@@ -9,7 +9,7 @@ import java.util.Arrays;
  */
 public class ArrayDuplicate {
     /**
-     * Removes duplicate strings from array (in place). The order of elements can be changed.
+     * Removes duplicate strings from array. The order of elements can be changed.
      * @param array array of strings
      * @return array containing only unique strings
      */
