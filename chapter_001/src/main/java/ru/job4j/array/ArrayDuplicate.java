@@ -14,14 +14,33 @@ public class ArrayDuplicate {
      * @return array containing only unique strings
      */
     public String[] remove(String[] array) {
-        Arrays.sort(array);
-        int unique = 0;
-        for (int i = 1; i < array.length; i++) {
-            if (!array[i].equals(array[unique])) {
-                unique++;
-                array[unique] = array[i];
+        if (array.length < 2) {
+            return array;
+        }
+        boolean duplicate;
+        int i = 1;
+        int last = array.length - 1;
+        while (i <= last) {
+            duplicate = false;
+            for (int j = i - 1; j >= 0; j--) {
+                if (array[j].equals(array[i])) {
+                    duplicate = true;
+                    break;
+                }
+            }
+            if (duplicate) {
+                swap(array, i, last);
+                last--;
+            } else {
+                i++;
             }
         }
-        return Arrays.copyOf(array, unique + 1);
+        return Arrays.copyOf(array, i);
+    }
+
+    private void swap(String[] array, int i, int j) {
+        String tmp = array[i];
+        array[i] = array[j];
+        array[j] = tmp;
     }
 }

@@ -14,7 +14,7 @@ public class ArrayDuplicateTest {
         ArrayDuplicate arrayDuplicate = new ArrayDuplicate();
         String[] input = {"Привет", "Мир", "Привет", "Супер", "Мир"};
         String[] result = arrayDuplicate.remove(input);
-        String[] expected = {"Мир", "Привет", "Супер"};
+        String[] expected = {"Привет", "Мир", "Супер"};
         assertThat(result, is(expected));
     }
 
@@ -23,7 +23,7 @@ public class ArrayDuplicateTest {
         ArrayDuplicate arrayDuplicate = new ArrayDuplicate();
         String[] input = "aaabbbaaaaaccccaaaddddccbcacbadcccccaaaaaaaabccccbcdddddddac".split("");
         String[] result = arrayDuplicate.remove(input);
-        String[] expected = "abcd".split("");
+        String[] expected = "acdb".split("");
         assertThat(result, is(expected));
     }
 }
