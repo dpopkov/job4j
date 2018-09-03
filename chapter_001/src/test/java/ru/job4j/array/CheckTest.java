@@ -42,4 +42,38 @@ public class CheckTest {
         }
         assertThat(result, is(expected));
     }
+
+    @Test
+    public void whenNonDecreasingArrayThenTrue() {
+        Check check = new Check();
+        int[] array = {1, 3, 3, 5, 7};
+        boolean result = check.isNonDecreasing(array);
+        assertThat(result, is(true));
+    }
+
+    @Test
+    public void whenDecreasingArrayThenFalse() {
+        Check check = new Check();
+        int[] array = {1, 3, 3, 1, 7};
+        boolean result = check.isNonDecreasing(array);
+        assertThat(result, is(false));
+    }
+
+    @Test
+    public void whenAllElementsContainedInSuperArrayThenTrue() {
+        Check check = new Check();
+        int[] superArray = {1, 3, 5, 9};
+        int[] subArray = {3, 5};
+        boolean result = check.isSubArray(superArray, subArray);
+        assertThat(result, is(true));
+    }
+
+    @Test
+    public void whenNotAllElementsContainedInSuperArrayThenFalse() {
+        Check check = new Check();
+        int[] superArray = {1, 3, 5, 7};
+        int[] subArray = {3, 5, 9};
+        boolean result = check.isSubArray(superArray, subArray);
+        assertThat(result, is(false));
+    }
 }
