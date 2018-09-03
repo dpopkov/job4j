@@ -3,6 +3,18 @@ package ru.job4j.tictactoe;
 import java.util.function.Predicate;
 
 public class Logic3T {
+    private enum Direction {
+        RIGHT(1, 0), DOWN(0, 1), DOWN_RIGHT(1, 1), DOWN_LEFT(-1, 1);
+
+        private int deltaX;
+        private int deltaY;
+
+        Direction(int deltaX, int deltaY) {
+            this.deltaX = deltaX;
+            this.deltaY = deltaY;
+        }
+    }
+
     private final Figure3T[][] table;
 
     public Logic3T(Figure3T[][] table) {
@@ -21,47 +33,36 @@ public class Logic3T {
         /* Checking rows of table */
         boolean winner = false;
         for (int row = 0; !winner && row < table.length; row++) {
-            winner = true;
-            for (int col = 0; col < table[row].length; col++) {
-                if (!predicate.test(table[row][col])) {
-                    winner = false;
-                    break;
-                }
-            }
+            winner = fillBy(predicate, 0, row, Direction.RIGHT);
         }
         if (winner) {
             return true;
         }
-
         /* Checking columns of table */
         winner = false;
         for (int col = 0; !winner && col < table[0].length; col++) {
-            winner = true;
-            for (int row = 0; row < table.length; row++) {
-                if (!predicate.test(table[row][col])) {
-                    winner = false;
-                    break;
-                }
-            }
+            winner = fillBy(predicate, col, 0, Direction.DOWN);
         }
         if (winner) {
             return true;
         }
-
         /* Checking both diagonals of table */
-        winner = true;
-        boolean winner2 = true;
-        for (int row = 0, col = 0, col2 = table[row].length - 1;
-                 (winner || winner2) && row < table.length;
-                 row++, col++, col2--) {
-            if (!predicate.test(table[row][col])) {
-                winner = false;
-            }
-            if (!predicate.test(table[row][col2])) {
-                winner2 = false;
+        return fillBy(predicate, 0, 0, Direction.DOWN_RIGHT)
+                || fillBy(predicate, this.table[0].length - 1, 0, Direction.DOWN_LEFT);
+    }
+
+    private boolean fillBy(Predicate<Figure3T> predicate, int startX, int startY, Direction direction) {
+        boolean result = true;
+        for (int i = 0; i < this.table.length; i++) {
+            Figure3T cell = this.table[startY][startX];
+            startX += direction.deltaX;
+            startY += direction.deltaY;
+            if (!predicate.test(cell)) {
+                result = false;
+                break;
             }
         }
-        return winner || winner2;
+        return result;
     }
 
     public boolean hasGap() {

@@ -56,8 +56,8 @@ public class Logic3TTest {
     @Test
     public void whenLeftDiagonalHasXWinnerThenTrue() {
         Figure3T[][] table = stringsToTable("XO ",
-                "OX ",
-                "OXX");
+                                                  "OX ",
+                                                  "OXX");
         Logic3T logic = new Logic3T(table);
         assertThat(logic.isWinnerX(), is(true));
     }
