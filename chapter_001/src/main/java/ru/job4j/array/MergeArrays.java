@@ -17,11 +17,7 @@ public class MergeArrays {
         int ai = 0, bi = 0;
         for (int i = 0; i < result.length; i++) {
             if (ai < a.length && bi < b.length) {
-                if (a[ai] < b[bi]) {
-                    result[i] = a[ai++];
-                } else {
-                    result[i] = b[bi++];
-                }
+                result[i] = a[ai] < b[bi] ? a[ai++] : b[bi++];
             } else if (ai < a.length) {
                 result[i] = a[ai++];
             } else if (bi < b.length) {
