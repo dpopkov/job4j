@@ -30,23 +30,26 @@ public class Logic3T {
     }
 
     private boolean isWinner(Predicate<Figure3T> predicate) {
-        /* Checking rows of table */
+        return rowWins(predicate) || columnWins(predicate) || diagonalWins(predicate);
+    }
+
+    private boolean rowWins(Predicate<Figure3T> predicate) {
         boolean winner = false;
         for (int row = 0; !winner && row < table.length; row++) {
             winner = fillBy(predicate, 0, row, Direction.RIGHT);
         }
-        if (winner) {
-            return true;
-        }
-        /* Checking columns of table */
-        winner = false;
+        return winner;
+    }
+
+    private boolean columnWins(Predicate<Figure3T> predicate) {
+        boolean winner = false;
         for (int col = 0; !winner && col < table[0].length; col++) {
             winner = fillBy(predicate, col, 0, Direction.DOWN);
         }
-        if (winner) {
-            return true;
-        }
-        /* Checking both diagonals of table */
+        return winner;
+    }
+
+    private boolean diagonalWins(Predicate<Figure3T> predicate) {
         return fillBy(predicate, 0, 0, Direction.DOWN_RIGHT)
                 || fillBy(predicate, this.table[0].length - 1, 0, Direction.DOWN_LEFT);
     }
