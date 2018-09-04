@@ -103,7 +103,7 @@ public class Logic3TTest {
         for (int i = 0; i < lines.length; i++) {
             String[] symbols = lines[i].split("");
             for (int j = 0; j < symbols.length; j++) {
-                Figure3T figure = null;
+                Figure3T figure;
                 switch (symbols[j]) {
                     case "X": figure = new Figure3T(true); break;
                     case "O": figure = new Figure3T(false); break;

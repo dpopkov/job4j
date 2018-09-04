@@ -26,6 +26,7 @@ public class Paint {
      * @return right triangle as string of characters
      */
     public String rightTrl(int height) {
+        //noinspection SuspiciousNameCombination
         return this.loopBy(height, height,
                 (row, col) -> col <= row);
     }
@@ -36,6 +37,7 @@ public class Paint {
      * @return left triangle as string of characters
      */
     public String leftTrl(int height) {
+        //noinspection SuspiciousNameCombination
         return this.loopBy(height, height,
                 (row, col) -> col >= (height - row - 1));
     }

@@ -18,6 +18,7 @@ public class ArrayDuplicateTest {
         assertThat(result, is(expected));
     }
 
+    @SuppressWarnings("SpellCheckingInspection")
     @Test
     public void whenRemoveMoreDuplicatesThenUniqueAgain() {
         ArrayDuplicate arrayDuplicate = new ArrayDuplicate();

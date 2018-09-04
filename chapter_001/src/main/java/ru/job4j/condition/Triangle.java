@@ -6,9 +6,9 @@ package ru.job4j.condition;
  * @author Denis Popkov
  */
 public class Triangle {
-    private Point a;
-    private Point b;
-    private Point c;
+    private final Point a;
+    private final Point b;
+    private final Point c;
 
     /**
      * Constructs and initializes triangle with 3 vertices.

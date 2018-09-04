@@ -6,8 +6,8 @@ public class Logic3T {
     private enum Direction {
         RIGHT(1, 0), DOWN(0, 1), DOWN_RIGHT(1, 1), DOWN_LEFT(-1, 1);
 
-        private int deltaX;
-        private int deltaY;
+        private final int deltaX;
+        private final int deltaY;
 
         Direction(int deltaX, int deltaY) {
             this.deltaX = deltaX;
@@ -56,6 +56,7 @@ public class Logic3T {
 
     private boolean fillBy(Predicate<Figure3T> predicate, int startX, int startY, Direction direction) {
         boolean result = true;
+        //noinspection ForLoopReplaceableByForEach
         for (int i = 0; i < this.table.length; i++) {
             Figure3T cell = this.table[startY][startX];
             startX += direction.deltaX;

@@ -6,8 +6,8 @@ package ru.job4j.condition;
  * @author Denis Popkov
  */
 public class Point {
-    private int x;
-    private int y;
+    private final int x;
+    private final int y;
 
     /**
      * Constructs and initializes point with specified coordinates.

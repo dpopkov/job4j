@@ -6,7 +6,7 @@ package ru.job4j.array;
  * @author Denis Popkov
  */
 public class ArrayChar {
-    private char[] data;
+    private final char[] data;
 
     public ArrayChar(String line) {
         data = line.toCharArray();
