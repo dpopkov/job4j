@@ -92,9 +92,9 @@ public class Tracker {
     }
 
     /**
-     * Finds index if item with the specified id.
+     * Finds index of item with the specified id.
      * @param id item id
-     * @return index of found item or -1 of nothing is found
+     * @return index of found item or -1 if nothing is found
      */
     private int findIndexById(String id) {
         int found = NON_EXISTING;
