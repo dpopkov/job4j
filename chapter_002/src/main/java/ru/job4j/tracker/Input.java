@@ -5,7 +5,7 @@ package ru.job4j.tracker;
  */
 public interface Input {
     /**
-     * Outputs a questions and receives a response.
+     * Outputs a question and retrieves a response.
      * @param question question
      * @return response
      */

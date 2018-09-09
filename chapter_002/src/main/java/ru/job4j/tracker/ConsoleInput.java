@@ -12,7 +12,7 @@ public class ConsoleInput implements Input {
     private final Scanner scanner = new Scanner(System.in);
 
     /**
-     * Displays a question on the console and receives a response.
+     * Displays a question on the console and retrieves a response.
      * @param question question
      * @return response
      */
