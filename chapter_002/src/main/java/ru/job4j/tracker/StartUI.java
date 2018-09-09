@@ -1,7 +1,14 @@
 package ru.job4j.tracker;
 
+/**
+ * The entry point to the application.
+ * Provides the main program cycle.
+ */
 public class StartUI {
-    private static final String[] menuOptions = {
+    /**
+     * Options of the application menu.
+     */
+    private static final String[] MENU_OPTIONS = {
             "0. Add new Item",
             "1. Show all items",
             "2. Edit item",
@@ -10,22 +17,57 @@ public class StartUI {
             "5. Find items by name",
             "6. Exit Program",
     };
+    /**
+     * Menu constant for adding a new item.
+     */
     private static final String ADD_ITEM = "0";
+    /**
+     * Menu constant for showing all items.
+     */
     private static final String SHOW_ALL_ITEMS = "1";
+    /**
+     * Menu constant for editing item.
+     */
     private static final String EDIT_ITEM = "2";
+    /**
+     * Menu constant for deleting item.
+     */
     private static final String DELETE_ITEM = "3";
+    /**
+     * Menu constant for finding item by id.
+     */
     private static final String FIND_ITEM_BY_ID = "4";
+    /**
+     * Menu constant for finding items by name.
+     */
     private static final String FIND_ITEMS_BY_NAME = "5";
+    /**
+     * Menu constant for exiting.
+     */
     private static final String EXIT = "6";
 
-    private Input input;
-    private Tracker tracker;
+    /**
+     * Input system of application.
+     */
+    private final Input input;
+    /**
+     * Storage of items.
+     */
+    private final Tracker tracker;
 
+    /**
+     * Constructs {@code StartUI} instance.
+     * @param input input system
+     * @param tracker storage of items
+     */
     public StartUI(Input input, Tracker tracker) {
         this.input = input;
         this.tracker = tracker;
     }
 
+    /**
+     * Initializes the program cycle.
+     */
     public void init() {
         boolean exit = false;
         while (!exit) {
@@ -51,6 +93,9 @@ public class StartUI {
         }
     }
 
+    /**
+     * Creates new item and adds to tracker.
+     */
     private void createItem() {
         printCaption("Creating new item");
         String name = input.ask("Enter name: ");
@@ -61,6 +106,9 @@ public class StartUI {
         System.out.println(item);
     }
 
+    /**
+     * Shows list of all items in tracker.
+     */
     private void showAllItems() {
         printCaption("List of all items");
         Item[] all = tracker.findAll();
@@ -69,6 +117,9 @@ public class StartUI {
         }
     }
 
+    /**
+     * Edits item. Asks for id and allows to enter new name and description.
+     */
     private void editItem() {
         printCaption("Editing item");
         String id = input.ask("Enter id: ");
@@ -77,26 +128,27 @@ public class StartUI {
         System.out.println(oldItem);
         String name = input.ask("Enter new name: ");
         String description = input.ask("Enter new description: ");
-        Item newItem = new Item(name, description, oldItem.getCreated());
-        newItem.setId(oldItem.getId());
-        tracker.replace(id, newItem);
+        tracker.replace(id, new Item(name, description, oldItem.getCreated()));
         System.out.println("Modified item:");
-        Item modified = tracker.findById(id);
-        System.out.println(modified);
+        System.out.println(tracker.findById(id));
     }
 
+    /**
+     * Asks for id and deletes item with entered id.
+     */
     private void deleteItem() {
         printCaption("Deleting item");
         String id = input.ask("Enter id: ");
-        Item found = tracker.findById(id);
-        if (found != null) {
-            tracker.delete(id);
+        if (tracker.delete(id)) {
             System.out.println("Item deleted.");
         } else {
             System.out.println("Item not found.");
         }
     }
 
+    /**
+     * Asks for id and displays item with entered id.
+     */
     private void findItemById() {
         printCaption("Finding item by id");
         String id = input.ask("Enter id: ");
@@ -109,6 +161,9 @@ public class StartUI {
         }
     }
 
+    /**
+     * Asks for name and displays list of items with entered name.
+     */
     private void findItemsByName() {
         printCaption("Finding item by name");
         String name = input.ask("Enter name: ");
@@ -122,18 +177,29 @@ public class StartUI {
         }
     }
 
+    /**
+     * Shows application menu.
+     */
     private void showMenu() {
         System.out.println();
         System.out.println("Menu.");
-        for (String op : menuOptions) {
+        for (String op : MENU_OPTIONS) {
             System.out.println(op);
         }
     }
 
+    /**
+     * Prints caption using specified text.
+     * @param text text
+     */
     private void printCaption(String text) {
         System.out.printf("------------%s------------%n", text);
     }
 
+    /**
+     * Main method.
+     * @param args not used
+     */
     public static void main(String[] args) {
         new StartUI(new ConsoleInput(), new Tracker()).init();
     }
