@@ -3,11 +3,26 @@ package ru.job4j.tracker;
 import java.util.Arrays;
 import java.util.Random;
 
+/**
+ * The repository for the list of items that allows to add, delete, replace and find items.
+ */
 public class Tracker {
+    /**
+     * Maximum capacity of the tracker.
+     */
     private static final int TRACKER_CAPACITY = 100;
+    /**
+     * Non-existing index less than lower bound of array.
+     */
     private static final int NON_EXISTING = -1;
 
+    /**
+     * The array is used as storage of {@code Item} elements.
+     */
     private final Item[] items = new Item[TRACKER_CAPACITY];
+    /**
+     * Index pointing to the next free slot in {@code items} array.
+     */
     private int position = 0;
 
     /**
@@ -25,26 +40,34 @@ public class Tracker {
      * Replaces existing item with other item.
      * @param id id of existing item
      * @param item new item
+     * @return true if replaced item, false otherwise
      */
-    public void replace(String id, Item item) {
+    public boolean replace(String id, Item item) {
+        boolean success = false;
         for (int i = 0; i < position; i++) {
             if (items[i].getId().equals(id)) {
+                item.setId(id);
                 items[i] = item;
+                success = true;
                 break;
             }
         }
+        return success;
     }
 
     /**
      * Deletes item by id.
      * @param id id of existing item
+     * @return true if item was deleted, false otherwise
      */
-    public void delete(String id) {
+    public boolean delete(String id) {
         int foundIndex = findIndexById(id);
         if (foundIndex > NON_EXISTING) {
             System.arraycopy(items, foundIndex + 1, items, foundIndex, position - foundIndex - 1);
             position--;
+            return true;
         }
+        return false;
     }
 
     /**

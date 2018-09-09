@@ -37,14 +37,24 @@ public class TrackerTest {
     }
 
     @Test
-    public void whenReplaceNameThenReturnNewName() {
+    public void whenReplaceExistingItemThenHasNewName() {
         Tracker tracker = new Tracker();
         Item previous = tracker.add(new Item("name1", "desc1", 123L));
-        Item next = new Item("name2", "desc2", 1234L);
+        Item next = new Item("new name", "desc2", 1234L);
         String id = previous.getId();
-        next.setId(id);
-        tracker.replace(id, next);
-        assertThat(tracker.findById(id).getName(), is("name2"));
+        boolean replaced = tracker.replace(id, next);
+        assertThat(replaced, is(true));
+        assertThat(tracker.findById(id).getName(), is("new name"));
+    }
+
+    @Test
+    public void whenReplaceNonExistingItemThenReturnsFalse() {
+        Tracker tracker = new Tracker();
+        tracker.add(new Item("name1", "desc1", 123L));
+        Item newItem = new Item("new name", "desc2", 1234L);
+        String id = "nonExistingId";
+        boolean replaced = tracker.replace(id, newItem);
+        assertThat(replaced, is(false));
     }
 
     @Test
@@ -53,7 +63,8 @@ public class TrackerTest {
         Item first = tracker.add(new Item("name1", "desc1", 123L));
         Item last = tracker.add(new Item("name2", "desc2", 1234L));
         assertThat(tracker.findAll().length, is(2));
-        tracker.delete(last.getId());
+        boolean deleted = tracker.delete(last.getId());
+        assertThat(deleted, is(true));
         assertThat(tracker.findAll().length, is(1));
         assertThat(tracker.findAll()[0], is(first));
     }
@@ -64,7 +75,8 @@ public class TrackerTest {
         Item first = tracker.add(new Item("name1", "desc1", 12L));
         Item last = tracker.add(new Item("name2", "desc2", 123L));
         assertThat(tracker.findAll().length, is(2));
-        tracker.delete(first.getId());
+        boolean deleted = tracker.delete(first.getId());
+        assertThat(deleted, is(true));
         assertThat(tracker.findAll().length, is(1));
         assertThat(tracker.findAll()[0], is(last));
     }
@@ -76,10 +88,20 @@ public class TrackerTest {
         Item middle = tracker.add(new Item("name2", "desc2", 123L));
         Item last = tracker.add(new Item("name3", "desc3", 1234L));
         assertThat(tracker.findAll().length, is(3));
-        tracker.delete(middle.getId());
+        boolean deleted = tracker.delete(middle.getId());
+        assertThat(deleted, is(true));
         assertThat(tracker.findAll().length, is(2));
         assertThat(tracker.findAll()[0], is(first));
         assertThat(tracker.findAll()[1], is(last));
+    }
+
+    @Test
+    public void whenDeleteNonExistingThenReturnFalse() {
+        Tracker tracker = new Tracker();
+        tracker.add(new Item("name1", "desc1", 12L));
+        tracker.add(new Item("name2", "desc2", 1234L));
+        boolean deleted = tracker.delete("nonExistingId");
+        assertThat(deleted, is(false));
     }
 
     @Test
@@ -91,7 +113,7 @@ public class TrackerTest {
     }
 
     @Test
-    public void whenFindByNonUniqueNameThenIsCorrect() {
+    public void whenFindByNonUniqueNameThenReturnsAllWithThatName() {
         Tracker tracker = new Tracker();
         Item item1 = tracker.add(new Item("name1", "desc1", 12L));
         Item item2 = tracker.add(new Item("name1", "desc2", 123L));
@@ -107,6 +129,6 @@ public class TrackerTest {
         Tracker tracker = new Tracker();
         tracker.add(new Item("name1", "desc1", 12L));
         tracker.add(new Item("name2", "desc2", 123L));
-        assertThat(tracker.findByName("123").length, is(0));
+        assertThat(tracker.findByName("nonExistingName").length, is(0));
     }
 }
