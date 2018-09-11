@@ -9,7 +9,7 @@ public class TriangleTest {
     @Test
     public void whenCreateTriangleWithHeight3ThenReturnTriangleShapeHeight3Characters() {
         Shape triangle = new Triangle(3);
-        //noinspection StringBufferReplaceableByString
+        @SuppressWarnings("StringBufferReplaceableByString")
         String expected = new StringBuilder()
                 .append("  *  ").append(Shape.NEW_LINE)
                 .append(" *** ").append(Shape.NEW_LINE)

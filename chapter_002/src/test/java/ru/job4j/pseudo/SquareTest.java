@@ -9,7 +9,7 @@ public class SquareTest {
     @Test
     public void whenCreateSquareWithLength3ThenReturnSquareShapeSize3Characters() {
         Shape square = new Square(3);
-        //noinspection StringBufferReplaceableByString
+        @SuppressWarnings("StringBufferReplaceableByString")
         String expected = new StringBuilder()
                 .append("***").append(Shape.NEW_LINE)
                 .append("***").append(Shape.NEW_LINE)
