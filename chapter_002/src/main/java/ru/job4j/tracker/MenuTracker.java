@@ -15,6 +15,11 @@ public class MenuTracker {
      * Tracker of items.
      */
     private final Tracker tracker;
+    /**
+     * Link to object that manages the program cycle.
+     * It should be used to exit the program.
+     */
+    private StartUI startUI;
 
     /**
      * List af actions available in the menu.
@@ -36,12 +41,21 @@ public class MenuTracker {
      * Initializes the menu with available actions.
      */
     private void initializeActions() {
-        actions.add(new AddItem(0));
-        actions.add(new ShowAllItems(1));
-        actions.add(new MenuTracker.EditItem(2));
-        actions.add(new MenuTracker.DeleteItem(3));
-        actions.add(new FindItemById(4));
-        actions.add(new FindItemsByName(5));
+        actions.add(new AddItem(0, "Add new Item"));
+        actions.add(new ShowAllItems(1, "Show all items"));
+        actions.add(new MenuTracker.EditItem(2, "Edit item"));
+        actions.add(new MenuTracker.DeleteItem(3, "Delete item"));
+        actions.add(new FindItemById(4, "Find item by Id"));
+        actions.add(new FindItemsByName(5, "Find items by name"));
+        actions.add(new ExitApp(6, "Exit Program"));
+    }
+
+    /**
+     * Sets the object managing the program cycle.
+     * @param startUI managing object
+     */
+    public void setUI(StartUI startUI) {
+        this.startUI = startUI;
     }
 
     /**
@@ -64,14 +78,6 @@ public class MenuTracker {
     }
 
     /**
-     * Returns numbers of user actions in the menu.
-     * @return number of actions
-     */
-    public int getActionsLength() {
-        return actions.size();
-    }
-
-    /**
      * Prints caption using specified text.
      * @param text text
      */
@@ -80,17 +86,52 @@ public class MenuTracker {
     }
 
     /**
+     * Implements action of exiting application.
+     * Uses {@link MenuTracker#startUI} field of outer class.
+     */
+    private class ExitApp implements UserAction {
+        private final int key;
+        private final String info;
+
+        /**
+         * Creates an instance of {@code ExitApp}.
+         * @param key value of key
+         * @param info descriptive information
+         */
+        public ExitApp(int key, String info) {
+            this.key = key;
+            this.info = info;
+        }
+
+        @Override
+        public int key() {
+            return key;
+        }
+
+        @Override
+        public void execute(Input input, Tracker tracker) {
+            MenuTracker.this.startUI.exit();
+        }
+
+        @Override
+        public String info() {
+            return this.info;
+        }
+    }
+    /**
      * Implements action of adding new item.
      */
     private class AddItem implements UserAction {
         private final int key;
+        private final String info;
 
         /**
          * Constructs instance of {@code AddItem}.
          * @param key value of key
          */
-        public AddItem(int key) {
+        public AddItem(int key, String info) {
             this.key = key;
+            this.info = info;
         }
 
         @Override
@@ -111,7 +152,7 @@ public class MenuTracker {
 
         @Override
         public String info() {
-            return "Add new Item";
+            return this.info;
         }
     }
 
@@ -120,13 +161,15 @@ public class MenuTracker {
      */
     private class ShowAllItems implements UserAction {
         private final int key;
+        private final String info;
 
         /**
          * Constructs instance of {@code ShowAllItems}.
          * @param key value of key
          */
-        public ShowAllItems(int key) {
+        public ShowAllItems(int key, String info) {
             this.key = key;
+            this.info = info;
         }
 
         @Override
@@ -145,7 +188,7 @@ public class MenuTracker {
 
         @Override
         public String info() {
-            return "Show all items";
+            return this.info;
         }
     }
 
@@ -154,13 +197,15 @@ public class MenuTracker {
      */
     private static class EditItem implements UserAction {
         private final int key;
+        private final String info;
 
         /**
          * Constructs instance of {@code EditItem}.
          * @param key value of key
          */
-        public EditItem(int key) {
+        public EditItem(int key, String info) {
             this.key = key;
+            this.info = info;
         }
 
         @Override
@@ -172,19 +217,14 @@ public class MenuTracker {
         public void execute(Input input, Tracker tracker) {
             printCaption("Editing item");
             String id = input.ask("Enter id: ");
-            Item oldItem = tracker.findById(id);
-            System.out.println("Current item:");
-            System.out.println(oldItem);
             String name = input.ask("Enter new name: ");
             String description = input.ask("Enter new description: ");
-            tracker.replace(id, new Item(name, description, oldItem.getCreated()));
-            System.out.println("Modified item:");
-            System.out.println(tracker.findById(id));
+            tracker.replace(id, new Item(name, description, System.currentTimeMillis()));
         }
 
         @Override
         public String info() {
-            return "Edit item";
+            return this.info;
         }
     }
 
@@ -193,13 +233,15 @@ public class MenuTracker {
      */
     private static class DeleteItem implements UserAction {
         private final int key;
+        private final String info;
 
         /**
          * Constructs instance of {@code DeleteItem}.
          * @param key value of key
          */
-        public DeleteItem(int key) {
+        public DeleteItem(int key, String info) {
             this.key = key;
+            this.info = info;
         }
 
         @Override
@@ -220,7 +262,7 @@ public class MenuTracker {
 
         @Override
         public String info() {
-            return "Delete item";
+            return this.info;
         }
     }
 }
@@ -230,13 +272,15 @@ public class MenuTracker {
  */
 class FindItemById implements UserAction {
     private final int key;
+    private final String info;
 
     /**
      * Constructs instance of {@code FindItemById}.
      * @param key value of key
      */
-    public FindItemById(int key) {
+    public FindItemById(int key, String info) {
         this.key = key;
+        this.info = info;
     }
 
     @Override
@@ -259,7 +303,7 @@ class FindItemById implements UserAction {
 
     @Override
     public String info() {
-        return "Find item by Id";
+        return this.info;
     }
 }
 
@@ -268,13 +312,15 @@ class FindItemById implements UserAction {
  */
 class FindItemsByName implements UserAction {
     private final int key;
+    private final String info;
 
     /**
      * Constructs instance of {@code FindItemsByName}.
      * @param key value of key
      */
-    public FindItemsByName(int key) {
+    public FindItemsByName(int key, String info) {
         this.key = key;
+        this.info = info;
     }
 
     @Override
@@ -298,6 +344,6 @@ class FindItemsByName implements UserAction {
 
     @Override
     public String info() {
-        return "Find items by name";
+        return this.info;
     }
 }

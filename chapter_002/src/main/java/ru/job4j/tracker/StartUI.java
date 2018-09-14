@@ -13,6 +13,10 @@ public class StartUI {
      * Storage of items.
      */
     private final Tracker tracker;
+    /**
+     * Flag indicating the current running state of the application.
+     */
+    private boolean running;
 
     /**
      * Constructs {@code StartUI} instance.
@@ -25,22 +29,23 @@ public class StartUI {
     }
 
     /**
+     * Exits cycle of the program.
+     */
+    public void exit() {
+        this.running = false;
+    }
+
+    /**
      * Initializes the program cycle.
      */
     public void init() {
         MenuTracker menu = new MenuTracker(this.input, this.tracker);
-        final int EXIT_KEY = menu.getActionsLength();
-        boolean exit = false;
-        while (!exit) {
+        menu.setUI(this);
+        this.running = true;
+        while (this.running) {
             menu.show();
-            System.out.println(String.format("%d. Exit Program", EXIT_KEY));
             String answer = this.input.ask("Select: ");
-            int key = Integer.parseInt(answer);
-            if (key == EXIT_KEY) {
-                exit = true;
-            } else {
-                menu.select(key);
-            }
+            menu.select(Integer.parseInt(answer));
         }
     }
 
