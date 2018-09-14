@@ -219,7 +219,11 @@ public class MenuTracker {
             String id = input.ask("Enter id: ");
             String name = input.ask("Enter new name: ");
             String description = input.ask("Enter new description: ");
-            tracker.replace(id, new Item(name, description, System.currentTimeMillis()));
+            if (tracker.replace(id, new Item(name, description, System.currentTimeMillis()))) {
+                System.out.println("Item modified.");
+            } else {
+                System.out.println("Item not found.");
+            }
         }
 
         @Override
