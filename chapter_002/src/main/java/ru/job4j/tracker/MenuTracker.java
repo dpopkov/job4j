@@ -59,7 +59,7 @@ public class MenuTracker {
     }
 
     /**
-     * Gets the the range corresponding to menu keys.
+     * Gets the range corresponding to menu keys.
      * @return range of keys
      */
     public int[] getKeyRange() {

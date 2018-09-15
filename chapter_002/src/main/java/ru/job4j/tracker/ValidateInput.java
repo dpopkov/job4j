@@ -1,5 +1,8 @@
 package ru.job4j.tracker;
 
+/**
+ * Implements validating console input system.
+ */
 public class ValidateInput extends ConsoleInput {
     /**
      * Displays a question on the console and retrieves integer response within specified range.
