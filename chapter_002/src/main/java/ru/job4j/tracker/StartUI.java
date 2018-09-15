@@ -41,11 +41,11 @@ public class StartUI {
     public void init() {
         MenuTracker menu = new MenuTracker(this.input, this.tracker);
         menu.setUI(this);
+        int[] range = menu.getKeyRange();
         this.running = true;
         while (this.running) {
             menu.show();
-            String answer = this.input.ask("Select: ");
-            menu.select(Integer.parseInt(answer));
+            menu.select(this.input.ask("Select: ", range));
         }
     }
 
@@ -54,6 +54,6 @@ public class StartUI {
      * @param args not used
      */
     public static void main(String[] args) {
-        new StartUI(new ConsoleInput(), new Tracker()).init();
+        new StartUI(new ValidateInput(), new Tracker()).init();
     }
 }

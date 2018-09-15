@@ -31,4 +31,15 @@ public class StubInput implements Input {
     public String ask(String question) {
         return answers[position++];
     }
+
+    /**
+     * Retrieves next integer response to testing question.
+     * @param question question
+     * @param range allowable range of responses
+     * @return next integer response from a sequence of prepared answers
+     */
+    @Override
+    public int ask(String question, int[] range) {
+        return Integer.parseInt(answers[position++]);
+    }
 }

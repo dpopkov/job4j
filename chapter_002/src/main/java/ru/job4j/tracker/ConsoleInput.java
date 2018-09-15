@@ -21,4 +21,28 @@ public class ConsoleInput implements Input {
         System.out.print(question);
         return scanner.nextLine();
     }
+
+    /**
+     * Displays a question on the console and retrieves integer response within specified range.
+     * @param question question
+     * @param range allowable range of responses
+     * @return response
+     * @throws MenuOutException when entered response does not match the specified range
+     */
+    @Override
+    public int ask(String question, int[] range) {
+        int answer = Integer.parseInt(this.ask(question));
+        boolean inRange = false;
+        for (int n : range) {
+            if (answer == n) {
+                inRange = true;
+                break;
+            }
+        }
+        if (inRange) {
+            return answer;
+        } else {
+            throw new MenuOutException("Out of menu range: " + answer);
+        }
+    }
 }

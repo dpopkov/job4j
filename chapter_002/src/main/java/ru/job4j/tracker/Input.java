@@ -10,4 +10,12 @@ public interface Input {
      * @return response
      */
     String ask(String question);
+
+    /**
+     * Outputs a question and retrieves integer response within specified range.
+     * @param question question
+     * @param range allowable range of responses
+     * @return response
+     */
+    int ask(String question, int[] range);
 }

@@ -59,6 +59,18 @@ public class MenuTracker {
     }
 
     /**
+     * Gets the the range corresponding to menu keys.
+     * @return range of keys
+     */
+    public int[] getKeyRange() {
+        int[] range = new int[actions.size()];
+        for (int i = 0; i < range.length; i++) {
+            range[i] = actions.get(i).key();
+        }
+        return range;
+    }
+
+    /**
      * Selects action by specified key.
      * @param key value of key
      */
