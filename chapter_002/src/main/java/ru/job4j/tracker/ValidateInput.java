@@ -1,9 +1,24 @@
 package ru.job4j.tracker;
 
 /**
- * Implements validating console input system.
+ * Implements validating input system.
  */
-public class ValidateInput extends ConsoleInput {
+public class ValidateInput implements Input {
+    private final Input input;
+
+    /**
+     * Constructs {@code ValidateInput} instance using the specified underlying input stream.
+     * @param input the underlying input stream
+     */
+    public ValidateInput(Input input) {
+        this.input = input;
+    }
+
+    @Override
+    public String ask(String question) {
+        return input.ask(question);
+    }
+
     /**
      * Displays a question on the console and retrieves integer response within specified range.
      * Repeats question until valid value is entered.
@@ -17,7 +32,7 @@ public class ValidateInput extends ConsoleInput {
         boolean inValid = true;
         do {
             try {
-                value = super.ask(question, range);
+                value = input.ask(question, range);
                 inValid = false;
             } catch (MenuOutException moe) {
                 System.out.println("Please select key from the menu.");
