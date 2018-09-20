@@ -35,24 +35,16 @@ public class StubInput implements Input {
     /**
      * Retrieves next integer response to testing question.
      * @param question question
-     * @param range allowable range of responses
+     * @param range    allowable range of responses
      * @return next integer response from a sequence of prepared answers
      * @throws MenuOutException when answer is not in specified range
      */
     @Override
     public int ask(String question, int[] range) {
         int answer = Integer.parseInt(this.ask(question));
-        boolean inRange = false;
-        for (int n : range) {
-            if (answer == n) {
-                inRange = true;
-                break;
-            }
-        }
-        if (inRange) {
-            return answer;
-        } else {
+        if (ConsoleInput.valueIsNotInRange(answer, range)) {
             throw new MenuOutException("Out of menu range: " + answer);
         }
+        return answer;
     }
 }

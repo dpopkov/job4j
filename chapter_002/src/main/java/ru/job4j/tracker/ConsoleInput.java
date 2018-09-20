@@ -1,6 +1,9 @@
 package ru.job4j.tracker;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
+import java.util.function.BiConsumer;
 
 /**
  * Implements console input system.
@@ -10,6 +13,18 @@ public class ConsoleInput implements Input {
      * Receives responses from console input stream.
      */
     private final Scanner scanner = new Scanner(System.in);
+
+    /**
+     * List of validators checking input values.
+     */
+    @SuppressWarnings("ArraysAsListWithZeroOrOneArgument")
+    private final List<BiConsumer<Integer, int[]>> biValidators = Arrays.asList(
+            (value, range) -> {
+                if (valueIsNotInRange(value, range)) {
+                    throw new MenuOutException("Out of menu range: " + value);
+                }
+            }
+    );
 
     /**
      * Displays a question on the console and retrieves a response.
@@ -32,17 +47,24 @@ public class ConsoleInput implements Input {
     @Override
     public int ask(String question, int[] range) {
         int answer = Integer.parseInt(this.ask(question));
-        boolean inRange = false;
+        this.biValidators.forEach(action -> action.accept(answer, range));
+        return answer;
+    }
+
+    /**
+     * Checks whether value is not in the specified range.
+     * @param value verified value
+     * @param range allowed range
+     * @return true if not in range, false otherwise
+     */
+    public static boolean valueIsNotInRange(int value, int[] range) {
+        boolean out = true;
         for (int n : range) {
-            if (answer == n) {
-                inRange = true;
+            if (value == n) {
+                out = false;
                 break;
             }
         }
-        if (inRange) {
-            return answer;
-        } else {
-            throw new MenuOutException("Out of menu range: " + answer);
-        }
+        return out;
     }
 }
