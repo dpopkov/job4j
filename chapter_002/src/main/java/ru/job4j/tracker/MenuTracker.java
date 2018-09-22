@@ -101,54 +101,32 @@ public class MenuTracker {
      * Implements action of exiting application.
      * Uses {@link MenuTracker#startUI} field of outer class.
      */
-    private class ExitApp implements UserAction {
-        private final int key;
-        private final String info;
-
+    private class ExitApp extends BaseAction {
         /**
          * Creates an instance of {@code ExitApp}.
          * @param key value of key
          * @param info descriptive information
          */
         public ExitApp(int key, String info) {
-            this.key = key;
-            this.info = info;
-        }
-
-        @Override
-        public int key() {
-            return key;
+            super(key, info);
         }
 
         @Override
         public void execute(Input input, Tracker tracker) {
             MenuTracker.this.startUI.exit();
         }
-
-        @Override
-        public String info() {
-            return this.info;
-        }
     }
     /**
      * Implements action of adding new item.
      */
-    private class AddItem implements UserAction {
-        private final int key;
-        private final String info;
-
+    private class AddItem extends BaseAction {
         /**
          * Constructs instance of {@code AddItem}.
          * @param key value of key
+         * @param info descriptive information
          */
         public AddItem(int key, String info) {
-            this.key = key;
-            this.info = info;
-        }
-
-        @Override
-        public int key() {
-            return key;
+            super(key, info);
         }
 
         @Override
@@ -161,32 +139,19 @@ public class MenuTracker {
             System.out.println("Created item:");
             System.out.println(item);
         }
-
-        @Override
-        public String info() {
-            return this.info;
-        }
     }
 
     /**
      * Implements action of displaying all items.
      */
-    private class ShowAllItems implements UserAction {
-        private final int key;
-        private final String info;
-
+    private class ShowAllItems extends BaseAction {
         /**
          * Constructs instance of {@code ShowAllItems}.
          * @param key value of key
+         * @param info descriptive information
          */
         public ShowAllItems(int key, String info) {
-            this.key = key;
-            this.info = info;
-        }
-
-        @Override
-        public int key() {
-            return key;
+            super(key, info);
         }
 
         @Override
@@ -197,32 +162,19 @@ public class MenuTracker {
                 System.out.println(item);
             }
         }
-
-        @Override
-        public String info() {
-            return this.info;
-        }
     }
 
     /**
      * Implements action of editing existing item.
      */
-    private static class EditItem implements UserAction {
-        private final int key;
-        private final String info;
-
+    private static class EditItem extends BaseAction {
         /**
          * Constructs instance of {@code EditItem}.
          * @param key value of key
+         * @param info descriptive information
          */
         public EditItem(int key, String info) {
-            this.key = key;
-            this.info = info;
-        }
-
-        @Override
-        public int key() {
-            return key;
+            super(key, info);
         }
 
         @Override
@@ -237,32 +189,19 @@ public class MenuTracker {
                 System.out.println("Item not found.");
             }
         }
-
-        @Override
-        public String info() {
-            return this.info;
-        }
     }
 
     /**
      * Implements action of deleting existing item.
      */
-    private static class DeleteItem implements UserAction {
-        private final int key;
-        private final String info;
-
+    private static class DeleteItem extends BaseAction {
         /**
          * Constructs instance of {@code DeleteItem}.
          * @param key value of key
+         * @param info descriptive information
          */
         public DeleteItem(int key, String info) {
-            this.key = key;
-            this.info = info;
-        }
-
-        @Override
-        public int key() {
-            return key;
+            super(key, info);
         }
 
         @Override
@@ -275,33 +214,20 @@ public class MenuTracker {
                 System.out.println("Item not found.");
             }
         }
-
-        @Override
-        public String info() {
-            return this.info;
-        }
     }
 }
 
 /**
  * Implements action of finding existing item by id.
  */
-class FindItemById implements UserAction {
-    private final int key;
-    private final String info;
-
+class FindItemById extends BaseAction {
     /**
      * Constructs instance of {@code FindItemById}.
      * @param key value of key
+     * @param info descriptive information
      */
     public FindItemById(int key, String info) {
-        this.key = key;
-        this.info = info;
-    }
-
-    @Override
-    public int key() {
-        return key;
+        super(key, info);
     }
 
     @Override
@@ -316,32 +242,19 @@ class FindItemById implements UserAction {
             System.out.println("Item not found.");
         }
     }
-
-    @Override
-    public String info() {
-        return this.info;
-    }
 }
 
 /**
  * Implements action of finding existing items by name.
  */
-class FindItemsByName implements UserAction {
-    private final int key;
-    private final String info;
-
+class FindItemsByName extends BaseAction {
     /**
      * Constructs instance of {@code FindItemsByName}.
      * @param key value of key
+     * @param info descriptive information
      */
     public FindItemsByName(int key, String info) {
-        this.key = key;
-        this.info = info;
-    }
-
-    @Override
-    public int key() {
-        return key;
+        super(key, info);
     }
 
     @Override
@@ -356,10 +269,5 @@ class FindItemsByName implements UserAction {
         } else {
             System.out.println("Items not found.");
         }
-    }
-
-    @Override
-    public String info() {
-        return this.info;
     }
 }
