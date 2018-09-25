@@ -14,6 +14,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import ru.job4j.chess.figures.Cell;
 import ru.job4j.chess.figures.Figure;
+import ru.job4j.chess.figures.black.*;
+import ru.job4j.chess.figures.white.*;
 
 public class Chess extends Application {
     private static final String JOB4J = "Шахматы на www.job4j.ru";
@@ -112,11 +114,41 @@ public class Chess extends Application {
     }
 
     private void buildBlackTeam(Group grid) {
-        // todo: build black figures
+        this.add(new PawnBlack(Cell.A7), grid);
+        this.add(new PawnBlack(Cell.B7), grid);
+        this.add(new PawnBlack(Cell.C7), grid);
+        this.add(new PawnBlack(Cell.D7), grid);
+        this.add(new PawnBlack(Cell.E7), grid);
+        this.add(new PawnBlack(Cell.F7), grid);
+        this.add(new PawnBlack(Cell.G7), grid);
+        this.add(new PawnBlack(Cell.H7), grid);
+        this.add(new RookBlack(Cell.A8), grid);
+        this.add(new KnightBlack(Cell.B8), grid);
+        this.add(new BishopBlack(Cell.C8), grid);
+        this.add(new QueenBlack(Cell.D8), grid);
+        this.add(new KingBlack(Cell.E8), grid);
+        this.add(new BishopBlack(Cell.F8), grid);
+        this.add(new KnightBlack(Cell.G8), grid);
+        this.add(new RookBlack(Cell.H8), grid);
     }
 
     public void buildWhiteTeam(Group grid) {
-        // todo: build white figures
+        this.add(new PawnWhite(Cell.A2), grid);
+        this.add(new PawnWhite(Cell.B2), grid);
+        this.add(new PawnWhite(Cell.C2), grid);
+        this.add(new PawnWhite(Cell.D2), grid);
+        this.add(new PawnWhite(Cell.E2), grid);
+        this.add(new PawnWhite(Cell.F2), grid);
+        this.add(new PawnWhite(Cell.G2), grid);
+        this.add(new PawnWhite(Cell.H2), grid);
+        this.add(new RookWhite(Cell.A1), grid);
+        this.add(new KnightWhite(Cell.B1), grid);
+        this.add(new BishopWhite(Cell.C1), grid);
+        this.add(new QueenWhite(Cell.D1), grid);
+        this.add(new KingWhite(Cell.E1), grid);
+        this.add(new BishopWhite(Cell.F1), grid);
+        this.add(new KnightWhite(Cell.G1), grid);
+        this.add(new RookWhite(Cell.H1), grid);
     }
 
     public void add(Figure figure, Group grid) {
