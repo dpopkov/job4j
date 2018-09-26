@@ -85,7 +85,7 @@ public class MenuTracker {
         System.out.println();
         System.out.println("Menu.");
         for (UserAction action : actions) {
-            System.out.printf("%d. %s%n", action.key(), action.info());
+            System.out.println(action.info());
         }
     }
 
