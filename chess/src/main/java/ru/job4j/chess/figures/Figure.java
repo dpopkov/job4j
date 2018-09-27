@@ -1,6 +1,7 @@
 package ru.job4j.chess.figures;
 
 import ru.job4j.chess.behaviors.MovingBehavior;
+import ru.job4j.chess.exceptions.ImpossibleMoveException;
 
 /**
  * Base class from which all concrete figures must inherit.
@@ -25,10 +26,6 @@ public abstract class Figure {
         this.movingBehavior = movingBehavior;
     }
 
-    public MovingBehavior getMovingBehavior() {
-        return movingBehavior;
-    }
-
     /**
      * Current position on chess board.
      * @return current position
@@ -42,8 +39,9 @@ public abstract class Figure {
      * @param source source position
      * @param dest destination position
      * @return array of cells that the figure must pass through
+     * @throws ImpossibleMoveException throws when the destination can not be reached in one move
      */
-    public Cell[] way(Cell source, Cell dest) {
+    public Cell[] way(Cell source, Cell dest) throws ImpossibleMoveException {
         return movingBehavior.way(source, dest);
     }
 

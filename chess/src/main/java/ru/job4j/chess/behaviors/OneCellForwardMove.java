@@ -1,5 +1,6 @@
 package ru.job4j.chess.behaviors;
 
+import ru.job4j.chess.exceptions.ImpossibleMoveException;
 import ru.job4j.chess.figures.Cell;
 
 /**
@@ -20,11 +21,10 @@ public class OneCellForwardMove implements MovingBehavior {
     }
 
     @Override
-    public Cell[] way(Cell source, Cell dest) {
-        Cell[] steps = new Cell[0];
-        if (source.y + deltaY == dest.y && source.x == dest.x) {
-            steps = new Cell[] {dest};
+    public Cell[] way(Cell source, Cell dest) throws ImpossibleMoveException {
+        if (source.x != dest.x || source.y + deltaY != dest.y) {
+            throw new ImpossibleMoveException();
         }
-        return steps;
+        return new Cell[] {dest};
     }
 }

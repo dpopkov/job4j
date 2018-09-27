@@ -1,9 +1,12 @@
 package ru.job4j.chess;
 
 import org.junit.Test;
-import ru.job4j.chess.behaviors.OneCellForwardMove;
+import ru.job4j.chess.exceptions.FigureNotFoundException;
+import ru.job4j.chess.exceptions.ImpossibleMoveException;
+import ru.job4j.chess.exceptions.OccupiedWayException;
 import ru.job4j.chess.figures.Cell;
-import ru.job4j.chess.figures.StubFigure;
+import ru.job4j.chess.figures.white.BishopWhite;
+import ru.job4j.chess.figures.white.PawnWhite;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
@@ -12,33 +15,46 @@ public class LogicTest {
     @Test
     public void whenMoveToCorrectDestinationThenReturnTrue() {
         Logic logic = new Logic();
-        logic.add(new StubFigure(Cell.A2, new OneCellForwardMove(1)));
-        boolean result = logic.move(Cell.A2, Cell.A3);
-        assertThat(result, is(true));
+        logic.add(new PawnWhite(Cell.A2));
+        try {
+            boolean result = logic.move(Cell.A2, Cell.A3);
+            assertThat(result, is(true));
+        } catch (ImpossibleMoveException | FigureNotFoundException | OccupiedWayException e) {
+            fail("Should not fail here");
+        }
     }
 
-    @Test
-    public void whenMoveToIncorrectDestinationThenReturnFalse() {
+    @Test(expected = ImpossibleMoveException.class)
+    public void whenMoveToIncorrectDestinationThenImpossibleMoveException() throws ImpossibleMoveException {
         Logic logic = new Logic();
-        logic.add(new StubFigure(Cell.A2, new OneCellForwardMove(1)));
-        boolean result = logic.move(Cell.A2, Cell.A1);
-        assertThat(result, is(false));
+        logic.add(new PawnWhite(Cell.A2));
+        try {
+            boolean result = logic.move(Cell.A2, Cell.A1);
+            assertThat(result, is(false));
+        } catch (FigureNotFoundException | OccupiedWayException e) {
+            fail("Should not fail here");
+        }
     }
 
-    @Test
-    public void whenRouteNotFreeThenReturnFalse() {
+    @Test(expected = OccupiedWayException.class)
+    public void whenRouteNotFreeThenOccupiedWayException() throws OccupiedWayException {
         Logic logic = new Logic();
-        logic.add(new StubFigure(Cell.A2, new OneCellForwardMove(1)));
-        logic.add(new StubFigure(Cell.A3, new OneCellForwardMove(1)));
-        boolean result = logic.move(Cell.A2, Cell.A3);
-        assertThat(result, is(false));
+        logic.add(new BishopWhite(Cell.B1));
+        logic.add(new PawnWhite(Cell.C2));
+        try {
+            logic.move(Cell.B1, Cell.D3);
+        } catch (ImpossibleMoveException | FigureNotFoundException e) {
+            fail("Should not fail here");
+        }
     }
 
-    @Test
-    public void whenRouteIsFreeThenReturnTrue() {
+    @Test(expected = FigureNotFoundException.class)
+    public void whenNoFigureThenFigureNotFoundException() throws FigureNotFoundException {
         Logic logic = new Logic();
-        logic.add(new StubFigure(Cell.A2, new OneCellForwardMove(1)));
-        boolean result = logic.move(Cell.A2, Cell.A3);
-        assertThat(result, is(true));
+        try {
+            logic.move(Cell.A2, Cell.A3);
+        } catch (ImpossibleMoveException | OccupiedWayException e) {
+            fail("Should not fail here");
+        }
     }
 }
