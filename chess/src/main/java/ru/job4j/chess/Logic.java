@@ -48,8 +48,8 @@ public class Logic {
         }
         boolean rst = false;
         if (steps.length > 0) {
-            rst = true;
             this.figures[index] = this.figures[index].copy(dest);
+            rst = true;
         }
         return rst;
     }

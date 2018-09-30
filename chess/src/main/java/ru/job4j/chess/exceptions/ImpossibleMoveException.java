@@ -2,7 +2,7 @@ package ru.job4j.chess.exceptions;
 
 import ru.job4j.chess.figures.Cell;
 
-public class ImpossibleMoveException extends Exception {
+public class ImpossibleMoveException extends RuntimeException {
     public ImpossibleMoveException() {
     }
 
