@@ -3,7 +3,7 @@ package ru.job4j.coffeemachine;
 import org.junit.Test;
 
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 public class CoffeeMachineTest {
 
@@ -39,5 +39,11 @@ public class CoffeeMachineTest {
     public void whenNeedMoreThan10CoinsThenCoinLimitExceededException() {
         CoffeeMachine machine = new CoffeeMachine();
         machine.changes(100, 7);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void whenValueIsLessThanPriceThenIllegalArgumentException() {
+        CoffeeMachine machine = new CoffeeMachine();
+        machine.changes(10, 11);
     }
 }

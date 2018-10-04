@@ -2,6 +2,9 @@ package ru.job4j.coffeemachine;
 
 import java.util.Arrays;
 
+/**
+ * Coffee machine returning change.
+ */
 public class CoffeeMachine {
     /**
      * Accessible coins.
@@ -21,7 +24,7 @@ public class CoffeeMachine {
      * @throws CoinLimitExceededException when number of coins in change is too large
      * @throws IllegalArgumentException when value is less than price
      */
-    public int[] changes(int value, int price) {
+    public int[] changes(int value, int price) throws IllegalArgumentException, CoinLimitExceededException {
         if (value < price) {
             throw new IllegalArgumentException("Value can not be less than price");
         }
