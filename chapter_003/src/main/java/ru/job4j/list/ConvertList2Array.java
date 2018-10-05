@@ -27,11 +27,6 @@ public class ConvertList2Array {
                 row++;
             }
         }
-        if (rows * cells > list.size()) {
-            while (col < cells) {
-                array[row][col++] = 0;
-            }
-        }
         return array;
     }
 }
