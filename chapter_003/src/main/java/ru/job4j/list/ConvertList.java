@@ -1,11 +1,12 @@
 package ru.job4j.list;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Contains method which converts list to two-dimensional array.
+ * Contains methods for converting lists to other lists or arrays.
  */
-public class ConvertList2Array {
+public class ConvertList {
     /**
      * Converts list to two-dimensional array.
      * The resulting two-dimensional array contains specified number of rows.
@@ -28,5 +29,20 @@ public class ConvertList2Array {
             }
         }
         return array;
+    }
+
+    /**
+     * Converts list of arrays to list of integers.
+     * @param list list of arrays
+     * @return list of integers
+     */
+    public List<Integer> convert(List<int[]> list) {
+        List<Integer> result = new ArrayList<>();
+        for (int[] array : list) {
+            for (int n : array) {
+                result.add(n);
+            }
+        }
+        return result;
     }
 }
