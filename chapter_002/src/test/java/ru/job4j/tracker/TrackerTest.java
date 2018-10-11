@@ -2,6 +2,8 @@ package ru.job4j.tracker;
 
 import org.junit.Test;
 
+import java.util.List;
+
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.*;
@@ -12,7 +14,7 @@ public class TrackerTest {
         Tracker tracker = new Tracker();
         Item item = new Item("test1", "desc1", 123L);
         tracker.add(item);
-        assertThat(tracker.findAll()[0], is(item));
+        assertThat(tracker.findAll().get(0), is(item));
     }
 
     @Test
@@ -62,11 +64,11 @@ public class TrackerTest {
         Tracker tracker = new Tracker();
         Item first = tracker.add(new Item("name1", "desc1", 123L));
         Item last = tracker.add(new Item("name2", "desc2", 1234L));
-        assertThat(tracker.findAll().length, is(2));
+        assertThat(tracker.findAll().size(), is(2));
         boolean deleted = tracker.delete(last.getId());
         assertThat(deleted, is(true));
-        assertThat(tracker.findAll().length, is(1));
-        assertThat(tracker.findAll()[0], is(first));
+        assertThat(tracker.findAll().size(), is(1));
+        assertThat(tracker.findAll().get(0), is(first));
     }
 
     @Test
@@ -74,11 +76,11 @@ public class TrackerTest {
         Tracker tracker = new Tracker();
         Item first = tracker.add(new Item("name1", "desc1", 12L));
         Item last = tracker.add(new Item("name2", "desc2", 123L));
-        assertThat(tracker.findAll().length, is(2));
+        assertThat(tracker.findAll().size(), is(2));
         boolean deleted = tracker.delete(first.getId());
         assertThat(deleted, is(true));
-        assertThat(tracker.findAll().length, is(1));
-        assertThat(tracker.findAll()[0], is(last));
+        assertThat(tracker.findAll().size(), is(1));
+        assertThat(tracker.findAll().get(0), is(last));
     }
 
     @Test
@@ -87,12 +89,12 @@ public class TrackerTest {
         Item first = tracker.add(new Item("name1", "desc1", 12L));
         Item middle = tracker.add(new Item("name2", "desc2", 123L));
         Item last = tracker.add(new Item("name3", "desc3", 1234L));
-        assertThat(tracker.findAll().length, is(3));
+        assertThat(tracker.findAll().size(), is(3));
         boolean deleted = tracker.delete(middle.getId());
         assertThat(deleted, is(true));
-        assertThat(tracker.findAll().length, is(2));
-        assertThat(tracker.findAll()[0], is(first));
-        assertThat(tracker.findAll()[1], is(last));
+        assertThat(tracker.findAll().size(), is(2));
+        assertThat(tracker.findAll().get(0), is(first));
+        assertThat(tracker.findAll().get(1), is(last));
     }
 
     @Test
@@ -109,7 +111,7 @@ public class TrackerTest {
         Tracker tracker = new Tracker();
         tracker.add(new Item("name1", "desc1", 12L));
         tracker.add(new Item("name2", "desc2", 123L));
-        assertThat(tracker.findByName("name1")[0].getName(), is("name1"));
+        assertThat(tracker.findByName("name1").get(0).getName(), is("name1"));
     }
 
     @Test
@@ -118,10 +120,10 @@ public class TrackerTest {
         Item item1 = tracker.add(new Item("name1", "desc1", 12L));
         Item item2 = tracker.add(new Item("name1", "desc2", 123L));
         tracker.add(new Item("jack sparrow", "desc3", 123L));
-        Item[] result = tracker.findByName("name1");
-        assertThat(result.length, is(2));
-        assertThat(result[0], is(item1));
-        assertThat(result[1], is(item2));
+        List<Item> result = tracker.findByName("name1");
+        assertThat(result.size(), is(2));
+        assertThat(result.get(0), is(item1));
+        assertThat(result.get(1), is(item2));
     }
 
     @Test
@@ -129,6 +131,6 @@ public class TrackerTest {
         Tracker tracker = new Tracker();
         tracker.add(new Item("name1", "desc1", 12L));
         tracker.add(new Item("name2", "desc2", 123L));
-        assertThat(tracker.findByName("nonExistingName").length, is(0));
+        assertThat(tracker.findByName("nonExistingName").size(), is(0));
     }
 }

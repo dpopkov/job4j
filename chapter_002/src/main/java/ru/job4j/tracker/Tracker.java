@@ -1,6 +1,7 @@
 package ru.job4j.tracker;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -8,22 +9,14 @@ import java.util.Random;
  */
 public class Tracker {
     /**
-     * Maximum capacity of the tracker.
-     */
-    private static final int TRACKER_CAPACITY = 100;
-    /**
      * Non-existing index less than lower bound of array.
      */
     private static final int NON_EXISTING = -1;
 
     /**
-     * The array is used as storage of {@code Item} elements.
+     * The list is used as storage of {@code Item} elements.
      */
-    private final Item[] items = new Item[TRACKER_CAPACITY];
-    /**
-     * Index pointing to the next free slot in {@code items} array.
-     */
-    private int position = 0;
+    private final List<Item> items = new ArrayList<>();
 
     /**
      * Adds an item and sets unique id of the item.
@@ -31,7 +24,7 @@ public class Tracker {
      * @return item with initialized id
      */
     public Item add(Item item) {
-        items[position++] = item;
+        items.add(item);
         item.setId(generateId());
         return item;
     }
@@ -44,10 +37,10 @@ public class Tracker {
      */
     public boolean replace(String id, Item item) {
         boolean success = false;
-        for (int i = 0; i < position; i++) {
-            if (items[i].getId().equals(id)) {
+        for (int i = 0; i < items.size(); i++) {
+            if (items.get(i).getId().equals(id)) {
                 item.setId(id);
-                items[i] = item;
+                items.set(i, item);
                 success = true;
                 break;
             }
@@ -63,8 +56,7 @@ public class Tracker {
     public boolean delete(String id) {
         int foundIndex = findIndexById(id);
         if (foundIndex > NON_EXISTING) {
-            System.arraycopy(items, foundIndex + 1, items, foundIndex, position - foundIndex - 1);
-            position--;
+            items.remove(foundIndex);
             return true;
         }
         return false;
@@ -74,8 +66,8 @@ public class Tracker {
      * Gets all items in tracker.
      * @return all items
      */
-    public Item[] findAll() {
-        return Arrays.copyOf(items, position);
+    public List<Item> findAll() {
+        return items;
     }
 
     /**
@@ -83,15 +75,14 @@ public class Tracker {
      * @param key name of item
      * @return items with names that equal specified key
      */
-    public Item[] findByName(String key) {
-        Item[] buffer = new Item[TRACKER_CAPACITY];
-        int index = 0;
-        for (int i = 0; i < position; i++) {
-            if (items[i].getName().equals(key)) {
-                buffer[index++] = items[i];
+    public List<Item> findByName(String key) {
+        List<Item> found = new ArrayList<>();
+        for (Item item : items) {
+            if (item.getName().equals(key)) {
+                found.add(item);
             }
         }
-        return Arrays.copyOf(buffer, index);
+        return found;
     }
 
     /**
@@ -101,7 +92,7 @@ public class Tracker {
      */
     public Item findById(String id) {
         int found = findIndexById(id);
-        return found > NON_EXISTING ? items[found] : null;
+        return found > NON_EXISTING ? items.get(found) : null;
     }
 
     /**
@@ -121,8 +112,8 @@ public class Tracker {
      */
     private int findIndexById(String id) {
         int found = NON_EXISTING;
-        for (int i = 0; i < position; i++) {
-            if (items[i].getId().equals(id)) {
+        for (int i = 0; i < items.size(); i++) {
+            if (items.get(i).getId().equals(id)) {
                 found = i;
                 break;
             }

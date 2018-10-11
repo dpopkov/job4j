@@ -157,7 +157,7 @@ public class MenuTracker {
         @Override
         public void execute(Input input, Tracker tracker) {
             printCaption("List of all items");
-            Item[] all = tracker.findAll();
+            List<Item> all = tracker.findAll();
             for (Item item : all) {
                 System.out.println(item);
             }
@@ -261,8 +261,8 @@ class FindItemsByName extends BaseAction {
     public void execute(Input input, Tracker tracker) {
         MenuTracker.printCaption("Finding item by name");
         String name = input.ask("Enter name: ");
-        Item[] items = tracker.findByName(name);
-        if (items.length > 0) {
+        List<Item> items = tracker.findByName(name);
+        if (items.size() > 0) {
             for (Item item : items) {
                 System.out.println(item);
             }

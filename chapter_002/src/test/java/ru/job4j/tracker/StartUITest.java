@@ -43,7 +43,7 @@ public class StartUITest {
         Tracker tracker = new Tracker();
         String[] answers = {"0", "name1", "desc1", "6"};
         new StartUI(new StubInput(answers), tracker).init();
-        Item item = tracker.findAll()[0];
+        Item item = tracker.findAll().get(0);
         assertThat(item.getName(), is("name1"));
         assertThat(item.getDesc(), is("desc1"));
     }
