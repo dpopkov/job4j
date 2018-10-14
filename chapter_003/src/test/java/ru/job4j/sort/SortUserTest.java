@@ -2,6 +2,7 @@ package ru.job4j.sort;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -37,5 +38,43 @@ public class SortUserTest {
         assertThat(result[0].getAge(), is(24));
         assertThat(result[1].getAge(), is(25));
         assertThat(result[2].getAge(), is(26));
+    }
+
+    @Test
+    public void whenSortingByNameLength() {
+        List<User> users = new ArrayList<User>() {
+            {
+                add(new User("Ringo", 26));
+                add(new User("John", 25));
+                add(new User("Al", 24));
+            }
+        };
+        List<User> result = new SortUser().sortNameLength(users);
+        assertThat(result.get(0).getName(), is("Al"));
+        assertThat(result.get(1).getName(), is("John"));
+        assertThat(result.get(2).getName(), is("Ringo"));
+    }
+
+    @Test
+    public void whenSortingByAllFields() {
+        List<User> users = new ArrayList<User>() {
+            {
+                add(new User("Иван", 30));
+                add(new User("Сергей", 40));
+                add(new User("Сергей", 20));
+                add(new User("Иван", 25));
+            }
+        };
+        List<User> result = new SortUser().sortByAllFields(users);
+        assertItem(result, 0, "Иван", 25);
+        assertItem(result, 1, "Иван", 30);
+        assertItem(result, 2, "Сергей", 20);
+        assertItem(result, 3, "Сергей", 40);
+    }
+
+    private void assertItem(List<User> result, int index, String name, int age) {
+        User user = result.get(index);
+        assertThat(user.getName(), is(name));
+        assertThat(user.getAge(), is(age));
     }
 }
