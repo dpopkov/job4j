@@ -41,12 +41,17 @@ public class Bank {
      * Deletes one existing user account.
      * @param passport passport of the existing user
      * @param account account to delete
+     * @throws AccountNotFoundException when the specified account not found
      */
-    public void deleteAccountFromUser(String passport, Account account) {
+    public void deleteAccountFromUser(String passport, Account account) throws AccountNotFoundException {
         User user = findUserByPassport(passport);
         if (user != null) {
             List<Account> accounts = usersAccounts.get(user);
-            accounts.remove(account);
+            int index = accounts.indexOf(account);
+            if (index < 0) {
+                throw new AccountNotFoundException();
+            }
+            accounts.remove(index);
         }
     }
 

@@ -78,6 +78,14 @@ public class BankTest {
         assertThat(list.get(0).getRequisites(), is("requisites2"));
     }
 
+    @Test(expected = AccountNotFoundException.class)
+    public void whenDeleteNonExistingAccountThenException() {
+        bank.addUser(new User("Denis", "pass1"));
+        bank.addAccountToUser("pass1", new Account("requisites1", 0));
+        Account nonExistingAccount = new Account("non-existing-requisites", 0.0);
+        bank.deleteAccountFromUser("pass1", nonExistingAccount);
+    }
+
     @Test
     public void whenTransferringToSameUserAccountThenSuccess() {
         bank.addUser(new User("Denis", "pass1"));
