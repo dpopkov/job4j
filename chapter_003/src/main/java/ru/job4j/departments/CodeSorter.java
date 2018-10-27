@@ -42,28 +42,45 @@ public class CodeSorter {
      * @param comparator department codes comparator
      * @return list of sorted codes (original list remains unchanged)
      */
-    private List<String> sort(List<String> codes, Comparator<String> comparator) {
-        SortedSet<String> sorted;
+    private List<String> sort(List<String> codes, Comparator<String[]> comparator) {
+        List<String> sortedList;
         if (comparator == null) {
-            sorted = new TreeSet<>(codes);
+            SortedSet<String> sortedSet = new TreeSet<>(codes);
+            for (String code : codes) {
+                ensureSuperCodes(sortedSet, code);
+            }
+            sortedList = new ArrayList<>(sortedSet);
         } else {
-            sorted = new TreeSet<>(comparator);
-            sorted.addAll(codes);
+            SortedMap<String[], String> sortedMap = listToMapOfSplittedCodes(codes, comparator);
+            for (String code : codes) {
+                ensureSuperCodes(sortedMap, code);
+            }
+            sortedList = new ArrayList<>(sortedMap.values());
         }
-        for (String code : codes) {
-            ensureSuperCodes(sorted, code);
+        return sortedList;
+    }
+
+    /**
+     * Converts list of codes to sorted map where arrays of splitted sub-codes are associated to the original codes.
+     * @param list list of original codes
+     * @param comparator comparator that will compare splitted sub-codes
+     * @return map of splitted sub-codes to codes
+     */
+    private SortedMap<String[], String> listToMapOfSplittedCodes(List<String> list, Comparator<String[]> comparator) {
+        SortedMap<String[], String> sorted = new TreeMap<>(comparator);
+        for (String code : list) {
+            String[] subCodes = code.split(REGEX_DELIMITER);
+            sorted.put(subCodes, code);
         }
-        return new ArrayList<>(sorted);
+        return sorted;
     }
 
     /**
      * Implements comparator for descending order preserving hierarchy of sub-departments.
      */
-    private class DescendingComparator implements Comparator<String> {
+    private class DescendingComparator implements Comparator<String[]> {
         @Override
-        public int compare(String code1, String code2) {
-            String[] subCodes1 = code1.split(REGEX_DELIMITER);
-            String[] subCodes2 = code2.split(REGEX_DELIMITER);
+        public int compare(String[] subCodes1, String[] subCodes2) {
             int minLength = Math.min(subCodes1.length, subCodes2.length);
             for (int i = 0; i < minLength; i++) {
                 int rst = subCodes2[i].compareTo(subCodes1[i]);
@@ -87,6 +104,19 @@ public class CodeSorter {
                 set.add(superCode);
                 ensureSuperCodes(set, superCode);
             }
+        }
+    }
+
+    /**
+     * Ensures that the specified sorted map contains super codes for the specified code.
+     * @param map sorted map of splitted sub-codes arrays to original codes
+     * @param code checked code
+     */
+    private void ensureSuperCodes(SortedMap<String[], String> map, String code) {
+        String superCode = getSuperCode(code);
+        if (superCode != null && !map.containsValue(superCode)) {
+            map.put(superCode.split(REGEX_DELIMITER), superCode);
+            ensureSuperCodes(map, superCode);
         }
     }
 
