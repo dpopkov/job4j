@@ -2,6 +2,7 @@ package ru.job4j.tracker;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * Contains all actions available to users.
@@ -22,6 +23,11 @@ public class MenuTracker {
     private StartUI startUI;
 
     /**
+     * Consumer used for output of messages.
+     */
+    private final Consumer<String> console;
+
+    /**
      * List af actions available in the menu.
      */
     private final List<UserAction> actions = new ArrayList<>();
@@ -31,9 +37,10 @@ public class MenuTracker {
      * @param input input system
      * @param tracker tracker of items
      */
-    public MenuTracker(Input input, Tracker tracker) {
+    public MenuTracker(Input input, Tracker tracker, Consumer<String> console) {
         this.input = input;
         this.tracker = tracker;
+        this.console = console;
         initializeActions();
     }
 
@@ -43,10 +50,10 @@ public class MenuTracker {
     private void initializeActions() {
         actions.add(new AddItem(0, "Add new Item"));
         actions.add(new ShowAllItems(1, "Show all items"));
-        actions.add(new MenuTracker.EditItem(2, "Edit item"));
-        actions.add(new MenuTracker.DeleteItem(3, "Delete item"));
-        actions.add(new FindItemById(4, "Find item by Id"));
-        actions.add(new FindItemsByName(5, "Find items by name"));
+        actions.add(new MenuTracker.EditItem(2, "Edit item", this));
+        actions.add(new MenuTracker.DeleteItem(3, "Delete item", this));
+        actions.add(new FindItemById(4, "Find item by Id", this));
+        actions.add(new FindItemsByName(5, "Find items by name", this));
         actions.add(new ExitApp(6, "Exit Program"));
     }
 
@@ -82,10 +89,10 @@ public class MenuTracker {
      * Shows the menu.
      */
     public void show() {
-        System.out.println();
-        System.out.println("Menu.");
+        console.accept("");
+        console.accept("Menu.");
         for (UserAction action : actions) {
-            System.out.println(action.info());
+            console.accept(action.info());
         }
     }
 
@@ -93,8 +100,16 @@ public class MenuTracker {
      * Prints caption using specified text.
      * @param text text
      */
-    public static void printCaption(String text) {
-        System.out.printf("------------%s------------%n", text);
+    public void printCaption(String text) {
+        console.accept(String.format("------------%s------------", text));
+    }
+
+    /**
+     * Prints message to console associated with this menu.
+     * @param text message
+     */
+    public void print(String text) {
+        console.accept(text);
     }
 
     /**
@@ -136,8 +151,8 @@ public class MenuTracker {
             String description = input.ask("Enter description: ");
             Item item = new Item(name, description, System.currentTimeMillis());
             item = tracker.add(item);
-            System.out.println("Created item:");
-            System.out.println(item);
+            console.accept("Created item:");
+            console.accept(item.toString());
         }
     }
 
@@ -159,7 +174,7 @@ public class MenuTracker {
             printCaption("List of all items");
             List<Item> all = tracker.findAll();
             for (Item item : all) {
-                System.out.println(item);
+                console.accept(item.toString());
             }
         }
     }
@@ -167,14 +182,15 @@ public class MenuTracker {
     /**
      * Implements action of editing existing item.
      */
-    private static class EditItem extends BaseAction {
+    private static class EditItem extends MenuAction {
         /**
          * Constructs instance of {@code EditItem}.
          * @param key value of key
          * @param info descriptive information
+         * @param menu menu object used as user interface
          */
-        public EditItem(int key, String info) {
-            super(key, info);
+        public EditItem(int key, String info, MenuTracker menu) {
+            super(key, info, menu);
         }
 
         @Override
@@ -184,9 +200,9 @@ public class MenuTracker {
             String name = input.ask("Enter new name: ");
             String description = input.ask("Enter new description: ");
             if (tracker.replace(id, new Item(name, description, System.currentTimeMillis()))) {
-                System.out.println("Item modified.");
+                print("Item modified.");
             } else {
-                System.out.println("Item not found.");
+                print("Item not found.");
             }
         }
     }
@@ -194,14 +210,15 @@ public class MenuTracker {
     /**
      * Implements action of deleting existing item.
      */
-    private static class DeleteItem extends BaseAction {
+    private static class DeleteItem extends MenuAction {
         /**
          * Constructs instance of {@code DeleteItem}.
          * @param key value of key
          * @param info descriptive information
+         * @param menu menu object used as user interface
          */
-        public DeleteItem(int key, String info) {
-            super(key, info);
+        public DeleteItem(int key, String info, MenuTracker menu) {
+            super(key, info, menu);
         }
 
         @Override
@@ -209,9 +226,9 @@ public class MenuTracker {
             printCaption("Deleting item");
             String id = input.ask("Enter id: ");
             if (tracker.delete(id)) {
-                System.out.println("Item deleted.");
+                print("Item deleted.");
             } else {
-                System.out.println("Item not found.");
+                print("Item not found.");
             }
         }
     }
@@ -220,26 +237,27 @@ public class MenuTracker {
 /**
  * Implements action of finding existing item by id.
  */
-class FindItemById extends BaseAction {
+class FindItemById extends MenuAction {
     /**
      * Constructs instance of {@code FindItemById}.
      * @param key value of key
      * @param info descriptive information
+     * @param menu menu object used as user interface
      */
-    public FindItemById(int key, String info) {
-        super(key, info);
+    public FindItemById(int key, String info, MenuTracker menu) {
+        super(key, info, menu);
     }
 
     @Override
     public void execute(Input input, Tracker tracker) {
-        MenuTracker.printCaption("Finding item by id");
+        printCaption("Finding item by id");
         String id = input.ask("Enter id: ");
         Item found = tracker.findById(id);
         if (found != null) {
-            System.out.println("Found item:");
-            System.out.println(found);
+            print("Found item:");
+            print(found.toString());
         } else {
-            System.out.println("Item not found.");
+            print("Item not found.");
         }
     }
 }
@@ -247,27 +265,28 @@ class FindItemById extends BaseAction {
 /**
  * Implements action of finding existing items by name.
  */
-class FindItemsByName extends BaseAction {
+class FindItemsByName extends MenuAction {
     /**
      * Constructs instance of {@code FindItemsByName}.
      * @param key value of key
      * @param info descriptive information
+     * @param menu menu object used as user interface
      */
-    public FindItemsByName(int key, String info) {
-        super(key, info);
+    public FindItemsByName(int key, String info, MenuTracker menu) {
+        super(key, info, menu);
     }
 
     @Override
     public void execute(Input input, Tracker tracker) {
-        MenuTracker.printCaption("Finding item by name");
+        printCaption("Finding item by name");
         String name = input.ask("Enter name: ");
         List<Item> items = tracker.findByName(name);
         if (items.size() > 0) {
             for (Item item : items) {
-                System.out.println(item);
+                print(item.toString());
             }
         } else {
-            System.out.println("Items not found.");
+            print("Items not found.");
         }
     }
 }

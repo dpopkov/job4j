@@ -1,12 +1,11 @@
 package ru.job4j.tracker;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.StringJoiner;
+import java.util.function.Consumer;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertNotNull;
@@ -25,24 +24,21 @@ public class StartUITest {
             .add("5. Find items by name")
             .add("6. Exit Program").toString();
 
-    private final PrintStream stdOut = System.out;
     private final ByteArrayOutputStream output = new ByteArrayOutputStream();
+    private final Consumer<String> consumer = new Consumer<String>() {
+        private final PrintStream printStream = new PrintStream(output);
 
-    @Before
-    public void setStandardOutput() {
-        System.setOut(new PrintStream(output));
-    }
-
-    @After
-    public void restoreStandardOutput() {
-        System.setOut(this.stdOut);
-    }
+        @Override
+        public void accept(String s) {
+            printStream.println(s);
+        }
+    };
 
     @Test
     public void whenUserAddItemThenTrackerHasNewItemWithSameNameAndDescription() {
         Tracker tracker = new Tracker();
         String[] answers = {"0", "name1", "desc1", "6"};
-        new StartUI(new StubInput(answers), tracker).init();
+        new StartUI(new StubInput(answers), tracker, consumer).init();
         Item item = tracker.findAll().get(0);
         assertThat(item.getName(), is("name1"));
         assertThat(item.getDesc(), is("desc1"));
@@ -54,7 +50,7 @@ public class StartUITest {
         Item item = tracker.add(new Item("name1", "desc1", 123L));
         String id = item.getId();
         String[] answers = {"2", id, "updated name", "updated description", "6"};
-        new StartUI(new StubInput(answers), tracker).init();
+        new StartUI(new StubInput(answers), tracker, consumer).init();
         Item itemById = tracker.findById(id);
         assertThat(itemById.getName(), is("updated name"));
         assertThat(itemById.getDesc(), is("updated description"));
@@ -67,7 +63,7 @@ public class StartUITest {
         String id = item.getId();
         assertNotNull(tracker.findById(id));
         String[] answers = {"3", id, "6"};
-        new StartUI(new StubInput(answers), tracker).init();
+        new StartUI(new StubInput(answers), tracker, consumer).init();
         assertNull(tracker.findById(id));
     }
 
@@ -75,7 +71,7 @@ public class StartUITest {
     public void whenShowAllItemsThenEmptyListIsDisplayed() {
         Tracker tracker = new Tracker();
         String[] answers = {"1", "6"};
-        new StartUI(new StubInput(answers), tracker).init();
+        new StartUI(new StubInput(answers), tracker, consumer).init();
         String expected = new StringJoiner(NEW_LINE, "", NEW_LINE)
                 .add(MENU)
                 .add("------------List of all items------------")
@@ -91,7 +87,7 @@ public class StartUITest {
         item1.setId("1");
         item2.setId("2");
         String[] answers = {"1", "6"};
-        new StartUI(new StubInput(answers), tracker).init();
+        new StartUI(new StubInput(answers), tracker, consumer).init();
         String expected = new StringJoiner(NEW_LINE, "", NEW_LINE)
                 .add(MENU)
                 .add("------------List of all items------------")
@@ -108,7 +104,7 @@ public class StartUITest {
         Item item2 = tracker.add(new Item("name2", "desc2", 1234L));
         item2.setId("123");
         String[] answers = {"4", "123", "6"};
-        new StartUI(new StubInput(answers), tracker).init();
+        new StartUI(new StubInput(answers), tracker, consumer).init();
         String expected = new StringJoiner(NEW_LINE, "", NEW_LINE)
                 .add(MENU)
                 .add("------------Finding item by id------------")
@@ -127,7 +123,7 @@ public class StartUITest {
         item2.setId("222");
         item3.setId("333");
         String[] answers = {"5", "Request", "6"};
-        new StartUI(new StubInput(answers), tracker).init();
+        new StartUI(new StubInput(answers), tracker, consumer).init();
         String expected = new StringJoiner(NEW_LINE, "", NEW_LINE)
                 .add(MENU)
                 .add("------------Finding item by name------------")
