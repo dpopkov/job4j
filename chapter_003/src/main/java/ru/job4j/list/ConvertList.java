@@ -1,7 +1,8 @@
 package ru.job4j.list;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * Contains methods for converting lists to other lists or arrays.
@@ -37,12 +38,9 @@ public class ConvertList {
      * @return list of integers
      */
     public List<Integer> convert(List<int[]> list) {
-        List<Integer> result = new ArrayList<>();
-        for (int[] array : list) {
-            for (int n : array) {
-                result.add(n);
-            }
-        }
-        return result;
+        return list.stream()
+                .map(IntStream::of)
+                .flatMap(IntStream::boxed)
+                .collect(Collectors.toList());
     }
 }
