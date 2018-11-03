@@ -96,14 +96,9 @@ public class Bank {
         if (user == null) {
             return null;
         }
-        Account found = null;
-        for (Account account : usersAccounts.get(user)) {
-            if (account.getRequisites().equals(requisite)) {
-                found = account;
-                break;
-            }
-        }
-        return found;
+        return usersAccounts.get(user).stream()
+                .filter(account -> account.getRequisites().equals(requisite))
+                .findFirst().orElse(null);
     }
 
     /**
@@ -112,13 +107,8 @@ public class Bank {
      * @return found user, or null if user with specified passport not found
      */
     private User findUserByPassport(String passport) {
-        User found = null;
-        for (User user : usersAccounts.keySet()) {
-            if (user.getPassport().equals(passport)) {
-                found = user;
-                break;
-            }
-        }
-        return found;
+        return usersAccounts.keySet().stream()
+                .filter(user -> user.getPassport().equals(passport))
+                .findFirst().orElse(null);
     }
 }
