@@ -3,6 +3,8 @@ package ru.job4j.tracker;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * The repository for the list of items that allows to add, delete, replace and find items.
@@ -76,13 +78,9 @@ public class Tracker {
      * @return items with names that equal specified key
      */
     public List<Item> findByName(String key) {
-        List<Item> found = new ArrayList<>();
-        for (Item item : items) {
-            if (item.getName().equals(key)) {
-                found.add(item);
-            }
-        }
-        return found;
+        return items.stream()
+                .filter(item -> item.getName().equals(key))
+                .collect(Collectors.toList());
     }
 
     /**
@@ -111,13 +109,8 @@ public class Tracker {
      * @return index of found item or -1 if nothing is found
      */
     private int findIndexById(String id) {
-        int found = NON_EXISTING;
-        for (int i = 0; i < items.size(); i++) {
-            if (items.get(i).getId().equals(id)) {
-                found = i;
-                break;
-            }
-        }
-        return found;
+        return IntStream.range(0, items.size())
+                .filter(i -> items.get(i).getId().equals(id))
+                .findFirst().orElse(NON_EXISTING);
     }
 }
