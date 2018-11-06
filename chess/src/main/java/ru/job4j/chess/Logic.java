@@ -6,6 +6,9 @@ import ru.job4j.chess.exceptions.OccupiedWayException;
 import ru.job4j.chess.figures.Cell;
 import ru.job4j.chess.figures.Figure;
 
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
 /**
  * The class is responsible for the movement of chess figures.
  */
@@ -58,9 +61,7 @@ public class Logic {
      * Removes all figures.
      */
     public void clean() {
-        for (int position = 0; position != this.figures.length; position++) {
-            this.figures[position] = null;
-        }
+        IntStream.range(0, this.figures.length).forEach(i -> this.figures[i] = null);
         this.index = 0;
     }
 
@@ -70,14 +71,7 @@ public class Logic {
      * @return true if the route is free, false otherwise
      */
     private boolean routeIsFree(Cell[] steps) {
-        boolean free = true;
-        for (Cell cell : steps) {
-            if (findBy(cell) != -1) {
-                free = false;
-                break;
-            }
-        }
-        return free;
+        return Stream.of(steps).noneMatch(cell -> findBy(cell) != -1);
     }
 
     /**
@@ -86,13 +80,8 @@ public class Logic {
      * @return index of -1 if cell is not occupied
      */
     private int findBy(Cell cell) {
-        int rst = -1;
-        for (int index = 0; index != this.figures.length; index++) {
-            if (this.figures[index] != null && this.figures[index].position().equals(cell)) {
-                rst = index;
-                break;
-            }
-        }
-        return rst;
+        return IntStream.range(0, this.figures.length)
+                .filter(index -> this.figures[index] != null && this.figures[index].position().equals(cell))
+                .findFirst().orElse(-1);
     }
 }
