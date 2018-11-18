@@ -36,7 +36,7 @@ public class IntMatrixIterator implements Iterator<Integer> {
      */
     @Override
     public Integer next() throws NoSuchElementException {
-        if (row == values.length || col == values[row].length) {
+        if (!hasNext()) {
             throw new NoSuchElementException();
         }
         int value = values[row][col++];
