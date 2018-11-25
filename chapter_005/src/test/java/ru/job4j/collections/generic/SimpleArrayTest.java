@@ -80,4 +80,19 @@ public class SimpleArrayTest {
         it.next();
         it.next();
     }
+
+    @Test
+    public void whenFindIndexBySatisfyingPredicateThenReturnIndex() {
+        array.add("333");
+        array.add("22");
+        int result = array.indexBy(s -> s.length() == 2);
+        assertThat(result, is(1));
+    }
+
+    @Test
+    public void whenFindIndexByNonSatisfyingPredicateThenReturnMinusOne() {
+        array.add("22");
+        int result = array.indexBy(s -> s.length() == 1);
+        assertThat(result, is(-1));
+    }
 }

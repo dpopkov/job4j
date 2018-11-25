@@ -2,6 +2,7 @@ package ru.job4j.collections.generic;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.function.Predicate;
 
 /**
  * Simple wrapper over an array that allows to add, delete and replace elements.
@@ -65,6 +66,20 @@ public class SimpleArray<T> implements Iterable<T> {
     public T get(int index) throws IndexOutOfBoundsException {
         checkIndex(index);
         return elements[index];
+    }
+
+    /**
+     * Finds index of the first element that matches the given predicate.
+     * @param predicate predicate to apply to find the element
+     * @return index of the found element or -1 if no elements match the predicate
+     */
+    public int indexBy(Predicate<T> predicate) {
+        for (int i = 0; i < size; i++) {
+            if (predicate.test(elements[i])) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     /**
