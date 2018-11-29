@@ -52,8 +52,8 @@ public class Converter {
          */
         @Override
         public Integer next() throws NoSuchElementException {
-            if (!inner.hasNext()) {
-                moveToNextInner();
+            if (!hasNext()) {
+                throw new NoSuchElementException();
             }
             return inner.next();
         }
