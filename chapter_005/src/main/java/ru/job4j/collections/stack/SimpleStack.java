@@ -26,4 +26,12 @@ public class SimpleStack<T> {
         }
         return list.removeLast();
     }
+
+    /**
+     * Checks whether the stack is empty.
+     * @return true is the stack is empty, false otherwise
+     */
+    public boolean isEmpty() {
+        return list.isEmpty();
+    }
 }

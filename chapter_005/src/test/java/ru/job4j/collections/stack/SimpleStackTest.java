@@ -23,4 +23,13 @@ public class SimpleStackTest {
         assertNull(stack.poll());
         assertNull(stack.poll());
     }
+
+    @Test
+    public void testIsEmpty() {
+        assertThat(stack.isEmpty(), is(true));
+        stack.push("1");
+        assertThat(stack.isEmpty(), is(false));
+        stack.poll();
+        assertThat(stack.isEmpty(), is(true));
+    }
 }
