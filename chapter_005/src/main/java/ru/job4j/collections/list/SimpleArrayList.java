@@ -1,9 +1,6 @@
 package ru.job4j.collections.list;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-import java.util.ConcurrentModificationException;
+import java.util.*;
 
 /**
  * Dynamic array-based list.
@@ -75,6 +72,15 @@ public class SimpleArrayList<E> implements Iterable<E> {
             throw new IndexOutOfBoundsException(Integer.toString(index));
         }
         return (E) container[index];
+    }
+
+    @Override
+    public String toString() {
+        StringJoiner joiner = new StringJoiner(", ", "[", "]");
+        for (int i = 0; i < size; i++) {
+            joiner.add(container[i].toString());
+        }
+        return joiner.toString();
     }
 
     /**

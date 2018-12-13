@@ -64,4 +64,14 @@ public class SimpleArrayListTest {
         list.add("33");
         it.next();
     }
+
+    @Test
+    public void testToString() {
+        SimpleArrayList<String> list = new SimpleArrayList<>();
+        assertThat(list.toString(), is("[]"));
+        list.add("11");
+        assertThat(list.toString(), is("[11]"));
+        list.add("22");
+        assertThat(list.toString(), is("[11, 22]"));
+    }
 }
