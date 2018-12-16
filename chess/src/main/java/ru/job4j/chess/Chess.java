@@ -184,4 +184,8 @@ public class Chess extends Application {
         }
         return rst;
     }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
 }

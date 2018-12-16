@@ -9,4 +9,23 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>chess</artifactId>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.6.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <mainClass>ru.job4j.chess.Chess</mainClass>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
