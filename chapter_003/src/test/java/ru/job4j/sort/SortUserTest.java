@@ -2,8 +2,6 @@ package ru.job4j.sort;
 
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -14,7 +12,7 @@ public class SortUserTest {
 
     @Test
     public void whenAlreadySortedThenReturnSortedByAge() {
-        List<User> users = Arrays.asList(
+        List<User> users = List.of(
                 new User("Paul", 24),
                 new User("John", 25),
                 new User("Ringo", 26)
@@ -28,7 +26,7 @@ public class SortUserTest {
 
     @Test
     public void whenNotSortedThenReturnSortedByAge() {
-        List<User> users = Arrays.asList(
+        List<User> users = List.of(
                 new User("Ringo", 26),
                 new User("John", 25),
                 new User("Paul", 24)
@@ -42,13 +40,11 @@ public class SortUserTest {
 
     @Test
     public void whenSortingByNameLength() {
-        List<User> users = new ArrayList<User>() {
-            {
-                add(new User("Ringo", 26));
-                add(new User("John", 25));
-                add(new User("Al", 24));
-            }
-        };
+        List<User> users = List.of(
+                new User("Ringo", 26),
+                new User("John", 25),
+                new User("Al", 24)
+        );
         List<User> result = new SortUser().sortNameLength(users);
         assertThat(result.get(0).getName(), is("Al"));
         assertThat(result.get(1).getName(), is("John"));
@@ -57,14 +53,12 @@ public class SortUserTest {
 
     @Test
     public void whenSortingByAllFields() {
-        List<User> users = new ArrayList<User>() {
-            {
-                add(new User("Иван", 30));
-                add(new User("Сергей", 40));
-                add(new User("Сергей", 20));
-                add(new User("Иван", 25));
-            }
-        };
+        List<User> users = List.of(
+                new User("Иван", 30),
+                new User("Сергей", 40),
+                new User("Сергей", 20),
+                new User("Иван", 25)
+        );
         List<User> result = new SortUser().sortByAllFields(users);
         assertItem(result, 0, "Иван", 25);
         assertItem(result, 1, "Иван", 30);

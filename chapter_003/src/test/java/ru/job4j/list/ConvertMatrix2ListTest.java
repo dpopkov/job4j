@@ -2,8 +2,6 @@ package ru.job4j.list;
 
 import org.junit.Test;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import static org.hamcrest.core.Is.is;
@@ -15,7 +13,7 @@ public class ConvertMatrix2ListTest {
     public void when1ElementThenList1() {
         int[][] input = {{42}};
         ConvertMatrix2List converter = new ConvertMatrix2List();
-        List<Integer> expected = Collections.singletonList(42);
+        List<Integer> expected = List.of(42);
         assertThat(converter.toList(input), is(expected));
     }
 
@@ -26,9 +24,7 @@ public class ConvertMatrix2ListTest {
                 {3, 4}
         };
         ConvertMatrix2List converter = new ConvertMatrix2List();
-        List<Integer> expected = Arrays.asList(
-                1, 2, 3, 4
-        );
+        List<Integer> expected = List.of(1, 2, 3, 4);
         List<Integer> result = converter.toList(input);
         assertThat(result, is(expected));
     }
@@ -40,9 +36,7 @@ public class ConvertMatrix2ListTest {
                 {5, 6, 7}
         };
         ConvertMatrix2List converter = new ConvertMatrix2List();
-        List<Integer> expected = Arrays.asList(
-                1, 2, 3, 4, 5, 6, 7
-        );
+        List<Integer> expected = List.of(1, 2, 3, 4, 5, 6, 7);
         List<Integer> result = converter.toList(input);
         assertThat(result, is(expected));
     }

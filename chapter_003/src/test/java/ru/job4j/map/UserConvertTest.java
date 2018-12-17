@@ -2,7 +2,6 @@ package ru.job4j.map;
 
 import org.junit.Test;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -14,7 +13,7 @@ public class UserConvertTest {
     @Test
     public void whenListOf2UsersThenMapContains2Users() {
         UserConvert converter = new UserConvert();
-        List<User> input = Arrays.asList(
+        List<User> input = List.of(
                 new User(101, "Ivan", "Paris"),
                 new User(102, "Boris", "Rome"));
         HashMap<Integer, User> result = converter.process(input);
@@ -26,7 +25,7 @@ public class UserConvertTest {
     @Test
     public void whenListOf2UsersWithOneIDThenMapContainsOneUser() {
         UserConvert converter = new UserConvert();
-        List<User> input = Arrays.asList(
+        List<User> input = List.of(
                 new User(102, "Ivan", "Paris"),
                 new User(102, "Boris", "Rome"));
         HashMap<Integer, User> result = converter.process(input);
