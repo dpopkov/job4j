@@ -28,12 +28,21 @@ public class UserTest {
     }
 
     @Test
-    public void whenUsersWithEqualDataThenHashcodeReturnEqualValues() {
+    public void whenUsersWithEqualDataThenEqualsReturnTrue() {
         Calendar birthday1 = new GregorianCalendar(1998, Calendar.DECEMBER, 20);
         Calendar birthday2 = new GregorianCalendar(1998, Calendar.DECEMBER, 20);
         User alice1 = new User("Alice", 1, birthday1);
         User alice2 = new User("Alice", 1, birthday2);
-        assertEquals(alice1.hashCode(), alice2.hashCode());
+        assertThat(alice1.equals(alice2), is(true));
+    }
+
+    @Test
+    public void whenDifferentUsersThenEqualsReturnsFalse() {
+        Calendar birthday1 = new GregorianCalendar(1998, Calendar.DECEMBER, 20);
+        Calendar birthday2 = new GregorianCalendar(1998, Calendar.DECEMBER, 21);
+        User alice1 = new User("Alice", 1, birthday1);
+        User alice2 = new User("Alice", 1, birthday2);
+        assertThat(alice1.equals(alice2), is(false));
     }
 
     @Test

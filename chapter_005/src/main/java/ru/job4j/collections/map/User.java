@@ -61,10 +61,22 @@ public class User {
     }
 
     /**
-     * @return a hash code value for this object.
+     * Indicates whether some other object is "equal to" this one.
+     * @param obj the reference object with which to compare.
+     * @return {@code true} if this object is the same as the obj
+     * argument; {@code false} otherwise.
      */
     @Override
-    public int hashCode() {
-        return Objects.hash(name, children, birthday);
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || this.getClass() != obj.getClass()) {
+            return false;
+        }
+        User other = (User) obj;
+        return Objects.equals(this.name, other.name)
+                && this.children == other.children
+                && Objects.equals(this.birthday, other.birthday);
     }
 }
