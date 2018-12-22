@@ -45,6 +45,16 @@ public class UserTest {
         assertThat(alice1.equals(alice2), is(false));
     }
 
+    @SuppressWarnings({"EqualsWithItself", "ConstantConditions", "EqualsBetweenInconvertibleTypes"})
+    @Test
+    public void whenNullOrNotUserThenEqualsReturnsFalse() {
+        Calendar birthday1 = new GregorianCalendar(1998, Calendar.DECEMBER, 20);
+        User alice1 = new User("Alice", 1, birthday1);
+        assertThat(alice1.equals(alice1), is(true));
+        assertThat(alice1.equals(null), is(false));
+        assertThat(alice1.equals("alice1"), is(false));
+    }
+
     @Test
     public void whenEqualsAndHashcodeAreNotOverriddenThenMapContainsTwoObjects() {
         Calendar birthday1 = new GregorianCalendar(1998, Calendar.DECEMBER, 20);
