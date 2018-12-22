@@ -2,6 +2,7 @@ package ru.job4j.collections.map;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Objects;
 
 /**
  * Represents user data with information about the name,
@@ -57,5 +58,13 @@ public class User {
         return "User{name='" + name
                 + "', children=" + children
                 + ", birthday=" + format.format(birthday.getTime()) + '}';
+    }
+
+    /**
+     * @return a hash code value for this object.
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, children, birthday);
     }
 }
