@@ -56,7 +56,16 @@ public class UserTest {
     }
 
     @Test
-    public void whenEqualsAndHashcodeAreNotOverriddenThenMapContainsTwoObjects() {
+    public void whenUsersWithEqualDataThenHashcodeReturnEqualValues() {
+        Calendar birthday1 = new GregorianCalendar(1998, Calendar.DECEMBER, 20);
+        Calendar birthday2 = new GregorianCalendar(1998, Calendar.DECEMBER, 20);
+        User alice1 = new User("Alice", 1, birthday1);
+        User alice2 = new User("Alice", 1, birthday2);
+        assertEquals(alice1.hashCode(), alice2.hashCode());
+    }
+
+    @Test
+    public void whenEqualsAndHashcodeAreOverriddenThenMapContainsOneObject() {
         Calendar birthday1 = new GregorianCalendar(1998, Calendar.DECEMBER, 20);
         Calendar birthday2 = new GregorianCalendar(1998, Calendar.DECEMBER, 20);
         User alice1 = new User("Alice", 1, birthday1);
@@ -64,8 +73,8 @@ public class UserTest {
         Map<User, String> map = new HashMap<>();
         map.put(alice1, "First");
         map.put(alice2, "Second");
-        assertThat(map.size(), is(2));
-        assertThat(map.get(alice1), is("First"));
+        assertThat(map.size(), is(1));
+        assertThat(map.get(alice1), is("Second"));
         assertThat(map.get(alice2), is("Second"));
         System.out.println(map.toString());
     }
