@@ -28,6 +28,15 @@ public class UserTest {
     }
 
     @Test
+    public void whenUsersWithEqualDataThenHashcodeReturnEqualValues() {
+        Calendar birthday1 = new GregorianCalendar(1998, Calendar.DECEMBER, 20);
+        Calendar birthday2 = new GregorianCalendar(1998, Calendar.DECEMBER, 20);
+        User alice1 = new User("Alice", 1, birthday1);
+        User alice2 = new User("Alice", 1, birthday2);
+        assertEquals(alice1.hashCode(), alice2.hashCode());
+    }
+
+    @Test
     public void whenEqualsAndHashcodeAreNotOverriddenThenMapContainsTwoObjects() {
         Calendar birthday1 = new GregorianCalendar(1998, Calendar.DECEMBER, 20);
         Calendar birthday2 = new GregorianCalendar(1998, Calendar.DECEMBER, 20);
