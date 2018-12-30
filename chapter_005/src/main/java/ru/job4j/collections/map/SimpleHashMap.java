@@ -28,10 +28,10 @@ public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Entry<K, V>> 
 
     /**
      * Inserts and associates the specified key and value.
-     * If the hash map contains the key, then returns false.
+     * If the hash map contains the key, then updates the value.
      * @param key key object
      * @param value value object
-     * @return true if the pair value/object inserted, otherwise false
+     * @return true if the pair value/object inserted/updated, otherwise false
      */
     @SuppressWarnings("unchecked")
     public boolean insert(K key, V value) {
@@ -40,8 +40,13 @@ public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Entry<K, V>> 
         }
         int index = getHash(key) % table.length;
         SimpleHashMap.Entry entry = table[index];
-        if (entry != null && key.equals(entry.getKey())) {
-            return false;
+        if (entry != null) {
+            if (key.equals(entry.getKey())) {
+                entry.setValue(value);
+                return true;
+            } else {
+                return false;
+            }
         }
         table[index] = new Entry(key, value);
         size++;
@@ -106,14 +111,14 @@ public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Entry<K, V>> 
      * @return iterator over the hash map entries
      */
     @Override
-    public Iterator<Entry<K, V>> iterator() {
+    public Iterator<SimpleHashMap.Entry<K, V>> iterator() {
         return new SimpleHashMapEntryIterator();
     }
 
     /**
      * Implements iterator that iterates over hash map entries.
      */
-    private class SimpleHashMapEntryIterator implements Iterator<Entry<K, V>> {
+    private class SimpleHashMapEntryIterator implements Iterator<SimpleHashMap.Entry<K, V>> {
         /** Index of the current hash table bucket. */
         private int index;
         /** Number of modifications at the moment of iterator initialization. */
@@ -141,7 +146,7 @@ public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Entry<K, V>> 
          * @throws NoSuchElementException if there is no more elements in the iteration
          */
         @Override
-        public SimpleHashMap.Entry<K, V> next() throws ConcurrentModificationException, NoSuchElementException {
+        public SimpleHashMap.Entry<K, V> next() {
             if (expectedModCount != modCount) {
                 throw new ConcurrentModificationException();
             }
@@ -159,7 +164,7 @@ public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Entry<K, V>> 
      */
     public static class Entry<K, V> {
         private final K key;
-        private final V value;
+        private V value;
 
         public Entry(K key, V value) {
             this.key = key;
@@ -172,6 +177,10 @@ public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Entry<K, V>> 
 
         public V getValue() {
             return value;
+        }
+
+        public void setValue(V value) {
+            this.value = value;
         }
     }
 }

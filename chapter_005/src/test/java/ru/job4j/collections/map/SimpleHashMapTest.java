@@ -5,7 +5,7 @@ import org.junit.Test;
 import java.util.ConcurrentModificationException;
 import java.util.NoSuchElementException;
 
-import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.Is.*;
 import static org.junit.Assert.*;
 
 public class SimpleHashMapTest {
@@ -32,11 +32,20 @@ public class SimpleHashMapTest {
     }
 
     @Test
-    public void whenInsertExistingKeyThenContainsOldKeyValuePair() {
+    public void whenInsertExistingKeyThenContainsNewValue() {
         var map = new SimpleHashMap<Integer, String>(2);
         assertThat(map.insert(11, "old eleven"), is(true));
-        assertThat(map.insert(11, "new eleven"), is(false));
-        assertThat(map.get(11), is("old eleven"));
+        assertThat(map.insert(11, "new eleven"), is(true));
+        assertThat(map.get(11), is("new eleven"));
+    }
+
+    @Test
+    public void whenInsertKeyWithSameHashcodeThenContainsOldValue() {
+        var map = new SimpleHashMap<FakeInt, String>(2);
+        map.insert(FakeInt.of(1), "one");
+        assertThat(map.get(FakeInt.of(1)), is("one"));
+        map.insert(FakeInt.of(11), "eleven");
+        assertThat(map.get(FakeInt.of(1)), is("one"));
     }
 
     @Test
