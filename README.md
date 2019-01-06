@@ -7,3 +7,9 @@
 
 Ниже перечислены проекты, реализованые мной во время обучения.
 Список пока пустой, проекты будут добавляться по мере реализации.
+
+
+#### VM options для запуска проектов JavaFX на JDK 11
+
+--module-path c:\path-to-javafx\javafx-sdk-11\lib  
+--add-modules=javafx.controls,javafx.fxml
