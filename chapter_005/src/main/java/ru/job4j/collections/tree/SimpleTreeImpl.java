@@ -78,6 +78,21 @@ public class SimpleTreeImpl<E> implements SimpleTree<E> {
     }
 
     /**
+     * Checks if all non-leaf nodes in the tree have two sub-nodes.
+     * @return true if the tree is binary, otherwise false
+     */
+    public boolean isBinary() {
+        NodeIterator it = new NodeIterator();
+        while (it.hasNext()) {
+            int numSubNodes = it.next().getChildren().size();
+            if (numSubNodes != 2 && numSubNodes != 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
      * Iterator over nodes of the tree that uses breadth-first search algorithm.
      */
     private class NodeIterator implements Iterator<Node<E>> {
