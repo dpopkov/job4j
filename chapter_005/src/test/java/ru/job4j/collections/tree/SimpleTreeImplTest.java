@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
 
 public class SimpleTreeImplTest {
 
-    private final SimpleTree<Integer> tree = new SimpleTreeImpl<>(1);
+    private final SimpleTreeImpl<Integer> tree = new SimpleTreeImpl<>(1);
 
     @Test
     public void whenAdd6ElementsThenFindLastReturns6() {
@@ -51,6 +51,7 @@ public class SimpleTreeImplTest {
         assertThat(tree.add(1, 2), is(false));
         Node<Integer> parent = tree.findBy(1).orElseThrow();
         assertThat(parent.getChildren().size(), is(1));
+        assertThat(tree.getSize(), is(2));
     }
 
     @Test
@@ -58,6 +59,7 @@ public class SimpleTreeImplTest {
         assertThat(tree.add(22, 3), is(false));
         Node<Integer> parent = tree.findBy(1).orElseThrow();
         assertThat(parent.getChildren().size(), is(0));
+        assertThat(tree.getSize(), is(1));
     }
 
     @Test(expected = ConcurrentModificationException.class)

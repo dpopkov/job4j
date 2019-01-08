@@ -9,6 +9,8 @@ import java.util.*;
 public class SimpleTreeImpl<E> implements SimpleTree<E> {
     /** Root node of the tree.*/
     private final Node<E> root;
+    /** Number of elements stored in the tree. */
+    private int size;
     /** Modification count. */
     private int modCount;
 
@@ -18,6 +20,14 @@ public class SimpleTreeImpl<E> implements SimpleTree<E> {
      */
     public SimpleTreeImpl(E rootValue) {
         this.root = new Node<>(rootValue);
+        size = 1;
+    }
+
+    /**
+     * @return number of elements stored in the tree
+     */
+    public int getSize() {
+        return size;
     }
 
     /**
@@ -37,6 +47,7 @@ public class SimpleTreeImpl<E> implements SimpleTree<E> {
             return false;
         }
         destination.get().add(new Node<>(child));
+        size++;
         modCount++;
         return true;
     }
