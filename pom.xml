@@ -21,6 +21,7 @@
     <module>puzzle</module>
     <module>chapter_004</module>
     <module>chapter_005</module>
+    <module>chapter_006_io</module>
   </modules>
   
   <dependencies>
