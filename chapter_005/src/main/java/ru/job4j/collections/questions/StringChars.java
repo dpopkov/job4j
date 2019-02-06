@@ -42,13 +42,13 @@ public class StringChars {
      */
     public List<Character> getDuplicates(String s) {
         Set<Character> dupes = new HashSet<>();
-        Set<Character> unique = new HashSet<>();
+        Set<Character> allChars = new HashSet<>();
         for (int i = 0; i < s.length(); i++) {
             char ch = s.charAt(i);
-            if (unique.contains(ch)) {
+            if (allChars.contains(ch)) {
                 dupes.add(ch);
             } else {
-                unique.add(ch);
+                allChars.add(ch);
             }
         }
         return new ArrayList<>(dupes);
