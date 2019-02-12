@@ -17,22 +17,16 @@ public class StringChars {
         if (s1.length() != s2.length()) {
             return false;
         }
-        Map<Character, Integer> map1 = buildCharFrequencies(s1);
-        Map<Character, Integer> map2 = buildCharFrequencies(s2);
-        return map1.equals(map2);
-    }
-
-    /**
-     * Строит таблицу содержащую символы и частоту символов в строке.
-     * @param s анализируемая строка
-     * @return таблица частот символов
-     */
-    private Map<Character, Integer> buildCharFrequencies(String s) {
-        Map<Character, Integer> map = new HashMap<>();
-        for (int i = 0; i < s.length(); i++) {
-            map.merge(s.charAt(i), 1, Integer::sum);
+        var map = new HashMap<Character, Integer>();
+        s1.chars().forEach(ch -> map.merge((char) ch, 1, Integer::sum));
+        for (int i = 0; i < s2.length(); i++) {
+            char ch = s2.charAt(i);
+            if (!map.containsKey(ch)) {
+                return false;
+            }
+            map.computeIfPresent(ch, (k, v) -> (v == 1) ? null : v - 1);
         }
-        return map;
+        return map.isEmpty();
     }
 
     /**
