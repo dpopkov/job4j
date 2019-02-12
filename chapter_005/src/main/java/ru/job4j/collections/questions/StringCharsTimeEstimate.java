@@ -7,10 +7,11 @@ import java.util.Scanner;
  * Класс проверяет время работы метода {@code StringChars::haveSameCharacters}.
  *
  * Получен результат:
- * 1000    95   ms
- * 2000    170  ms
- * 4000    286  ms
- * 8000    492  ms
+ *         v.1 (2 maps) v.2         (w/o computeIfPresent)
+ * 1000    95   ms      125 ms      111 ms
+ * 2000    170  ms      191 ms      174 ms
+ * 4000    286  ms      323 ms      303 ms
+ * 8000    492  ms      561 ms      526 ms
  */
 public class StringCharsTimeEstimate {
     public static void main(String[] args) {
