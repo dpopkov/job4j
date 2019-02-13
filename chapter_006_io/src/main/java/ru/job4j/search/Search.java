@@ -11,7 +11,7 @@ public class Search {
     /**
      * Gets a list of all files with an extension from the specified list of extensions.
      * Uses breadth first search in all subdirectories.
-     * List of files in every directory is sorted by name, because method @{code listFiles()} returns
+     * List of files in every directory is sorted by name, because method {@code listFiles()} returns
      * files in order different in Windows ans Linux.
      * @param parent starting directory
      * @param extensions list of extensions
