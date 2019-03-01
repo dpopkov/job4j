@@ -1,10 +1,10 @@
 package ru.job4j.io.chat;
 
-import com.google.common.jimfs.Configuration;
-import com.google.common.jimfs.Jimfs;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -27,10 +27,12 @@ public class ConsoleChatTest {
     private InputStream savedIn;
     private PrintStream savedOut;
 
+    @Rule
+    public TemporaryFolder temporaryFolder = new TemporaryFolder();
+
     @Before
     public void setup() throws IOException {
-        testDir = Jimfs.newFileSystem(Configuration.unix()).getPath("testDir");
-        Files.createDirectory(testDir);
+        testDir = temporaryFolder.newFolder("testDir").toPath();
         input = Files.write(testDir.resolve("input.txt"), phrases, StandardCharsets.UTF_8);
         savedIn = System.in;
         savedOut = System.out;
@@ -39,24 +41,14 @@ public class ConsoleChatTest {
 
     @Test
     public void whenStartChatThenInputIsPrintedAndLogged() throws IOException {
-        String userInput = ""
-                + "Hello" + NL
-                + "Goodbye" + NL
-                + "quit" + NL;
+        String userInput = String.join(NL, "Hello", "Goodbye", "quit", "");
         System.setIn(new ByteArrayInputStream(userInput.getBytes()));
         Path logFile = testDir.resolve("log.txt");
         ConsoleChat chat = new ConsoleChat(input, logFile);
         chat.setRandom(new Random(TEST_SEED));
         chat.start();
-        String botResponse = ""
-                + "phrase1" + NL
-                + "phrase2" + NL;
-        String conversation = ""
-                + "Hello" + NL
-                + "phrase1" + NL
-                + "Goodbye" + NL
-                + "phrase2" + NL
-                + "quit" + NL;
+        String botResponse = String.join(NL, "phrase1", "phrase2", "");
+        String conversation = String.join(NL, "Hello", "phrase1", "Goodbye", "phrase2", "quit", "");
         assertThat(buffer.toString(), is(botResponse));
         String log = Files.readString(logFile, StandardCharsets.UTF_8);
         assertThat(log, is(conversation));

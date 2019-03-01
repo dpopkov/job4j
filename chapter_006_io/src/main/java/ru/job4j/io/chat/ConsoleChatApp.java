@@ -19,7 +19,7 @@ public class ConsoleChatApp {
         try {
             chat.start();
         } catch (IOException e) {
-            System.out.println("I/O error: " + e);
+            e.printStackTrace();
         }
     }
 }

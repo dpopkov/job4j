@@ -1,8 +1,8 @@
 package ru.job4j.io.chat;
 
-import com.google.common.jimfs.Configuration;
-import com.google.common.jimfs.Jimfs;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -12,11 +12,12 @@ import static org.hamcrest.core.Is.*;
 import static org.junit.Assert.*;
 
 public class SimpleLoggerTest {
+    @Rule
+    public TemporaryFolder temporaryFolder = new TemporaryFolder();
 
     @Test
     public void whenAcceptMessageThenMessageIsWrittenToFile() throws IOException {
-        Path testDir = Jimfs.newFileSystem(Configuration.unix()).getPath("testDir");
-        Files.createDirectory(testDir);
+        Path testDir = temporaryFolder.newFolder("testDir").toPath();
         Path log = testDir.resolve("log.txt");
         SimpleLogger logger = new SimpleLogger(log);
         logger.accept("test1");
