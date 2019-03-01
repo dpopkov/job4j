@@ -8,7 +8,7 @@ import java.nio.file.Path;
  * Usage in command line: java Pack -d directory -e ext1 ext2 -o output.
  * directory - path to the folder we want to archive
  * ext1 ext2 ... - file extensions that we want to exclude from the archive
- * output - path to the archive fle
+ * output - path to the archive file
  */
 public class Pack {
     public static void main(String[] args) {
@@ -24,7 +24,7 @@ public class Pack {
                     arguments.directory(), arguments.output(), arguments.exclude());
             System.out.println(result.toAbsolutePath() + " archive created");
         } catch (IOException e) {
-            System.out.println("I/O error: " + e);
+            e.printStackTrace();
         }
     }
 }

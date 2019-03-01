@@ -34,21 +34,15 @@ public class FolderArchiver {
      * @param excludeExt list of extensions to exclude from compressing
      *                   or null to compress all files
      * @return path to output file
-     * @throws IOException if an I/O error occurs
+     * @throws IOException if an I/O error occurs when accessing files in the directory or opening output stream
+     * @throws WrappedIOException if an I/O error occurs when writing entries to zip file
      */
     public Path compress(Path directory, Path output, List<String> excludeExt) throws IOException {
         FileExtensionFilter exclude = new FileExtensionFilter(excludeExt);
         try (ZipOutputStream out = new ZipOutputStream(Files.newOutputStream(output))) {
-            try {
-                Files.walk(directory)
-                        .filter(entry -> Files.isRegularFile(entry) && (excludeExt == null || exclude.reject(entry)))
-                        .forEach(entry -> writeEntryToZip(out, directory, entry));
-            } catch (WrappedIOException e) {
-                if (e.getCause() instanceof IOException) {
-                    throw (IOException) e.getCause();
-                }
-                throw e;
-            }
+            Files.walk(directory)
+                .filter(entry -> Files.isRegularFile(entry) && (excludeExt == null || exclude.reject(entry)))
+                .forEach(entry -> writeEntryToZip(out, directory, entry));
         }
         return output;
     }
