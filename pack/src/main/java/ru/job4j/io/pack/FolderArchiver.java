@@ -48,13 +48,13 @@ public class FolderArchiver {
     }
 
     /**
-     * Writes the specified entry to zip output stream.
-     * @param out output to zip
+     * Writes the specified entry to zip output stream. The output stream remains open.
+     * @param out open output stream to zip
      * @param baseDir base directory, all files of which are archived
      * @param entry path to every file that should be zipped
-     * @throws WrappedIOException if an I/O error has occurred this exception saves the cause
+     * @throws WrappedIOException if an I/O error has occurred then this exception wraps the cause exception.
      */
-    private void writeEntryToZip(ZipOutputStream out, Path baseDir, Path entry) {
+    public void writeEntryToZip(ZipOutputStream out, Path baseDir, Path entry) {
         try {
             out.putNextEntry(new ZipEntry(baseDir.relativize(entry).toString()));
             out.write(Files.readAllBytes(entry));

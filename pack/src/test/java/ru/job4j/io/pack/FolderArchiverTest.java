@@ -13,6 +13,7 @@ import java.util.zip.*;
 
 import static org.hamcrest.core.Is.*;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.*;
 
 public class FolderArchiverTest {
     private static final String PROJECT_NAME = "project1";
@@ -59,6 +60,13 @@ public class FolderArchiverTest {
         assertThat(Files.exists(zipArchive), is(true));
         Map<String, Long> zippedFiles = putZipEntriesInfoToMap(zipArchive);
         assertThat(zippedFiles, is(expectedInZip));
+    }
+
+    @Test(expected = FolderArchiver.WrappedIOException.class)
+    public void whenWriteEntryToZipAndIOExceptionThenThrowWrappedIOException() throws IOException {
+        ZipOutputStream out = mock(ZipOutputStream.class);
+        doThrow(new IOException()).when(out).putNextEntry(any(ZipEntry.class));
+        new FolderArchiver().writeEntryToZip(out, source, source.resolve("test.txt"));
     }
 
     private static Map<String, Long> putZipEntriesInfoToMap(Path zipFile) throws IOException {
