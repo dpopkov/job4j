@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<entry key="default">Точный ответ мне неизвестен. Лучше спрашивать об известных языках программирования.</entry>
+<entry key="Java">Это интересный вопрос. Java позволяет сделать многое.</entry>
+<entry key="Python">Python удобный язык, но идеальных языков не существует.</entry>
+<entry key="Assembler">Assembler не лучший язык для начала..</entry>
+<entry key="Lisp">Если множество скобок не пугают, то можно использовать Lisp.</entry>
+<entry key="JavaScript">От JavaScript уже невозможно избавиться.</entry>
+<entry key="C#">Многие считают, что C# значительно превзошёл своего предшественника.</entry>
+<entry key="C++">C++ меня пугает.</entry>
+<entry key="C">Линус Торвальдс знает о C намного больше.</entry>
+</properties>
