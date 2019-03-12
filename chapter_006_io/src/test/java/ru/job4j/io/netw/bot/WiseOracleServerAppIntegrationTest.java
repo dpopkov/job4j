@@ -11,16 +11,17 @@ import java.util.Scanner;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
-import static ru.job4j.io.netw.bot.Constants.*;
 
 public class WiseOracleServerAppIntegrationTest {
+    private static final int TEST_PORT = 5001;
+
     @Test
     public void whenStartWithAnswersThenSendsAnswers() throws IOException {
         Map<String, String> answers = Map.of("KeyWord1", " Answer1", "KeyWord2", "Answer2");
         WiseOracleServerApp app = new WiseOracleServerApp();
         new Thread(() -> {
             try {
-                app.start(PORT, answers);
+                app.start(TEST_PORT, answers);
             } catch (IOException e) {
                 e.printStackTrace();
                 fail();
@@ -33,7 +34,7 @@ public class WiseOracleServerAppIntegrationTest {
 
     @Test
     public void whenMainThenReadAnswersFromResourceXmlFile() throws IOException {
-        new Thread(() -> WiseOracleServerApp.main(null)).start();
+        new Thread(() -> WiseOracleServerApp.main(new String[] {Integer.toString(TEST_PORT)})).start();
         String fromClient = "Python\nbye\n";
         String response = receiveResponse(fromClient);
         assertThat(response, is("Python удобный язык, но идеальных языков не существует."));
@@ -41,7 +42,7 @@ public class WiseOracleServerAppIntegrationTest {
 
     private String receiveResponse(String request) throws IOException {
         String response;
-        try (Socket socket = new Socket("localhost", PORT);
+        try (Socket socket = new Socket("localhost", TEST_PORT);
              OutputStream out = socket.getOutputStream();
              Scanner in = new Scanner(socket.getInputStream())
         ) {

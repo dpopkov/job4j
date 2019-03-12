@@ -5,7 +5,7 @@ package ru.job4j.io.netw.bot;
  */
 public class Constants {
     /** Port number. */
-    public static final int PORT = 8000;
+    public static final int DEFAULT_PORT = 8000;
 
     /** New line string that designates end of client message. */
     public static final String NL = "\n";

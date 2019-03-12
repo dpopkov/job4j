@@ -16,14 +16,18 @@ public class WiseOracleServerApp {
 
     /**
      * Main method starting the application.
-     * @param args not used
+     * @param args args[0] - port number
      */
     public static void main(String[] args) {
+        int port = DEFAULT_PORT;
+        if (args.length == 1) {
+            port = Integer.parseInt(args[0]);
+        }
         try {
             DataLoader data = new DataLoader();
             data.loadFromXML(WiseOracleServerApp.class.getResourceAsStream(XML_FILE));
             Map<String, String> answers = data.getMap();
-            new WiseOracleServerApp().start(PORT, answers);
+            new WiseOracleServerApp().start(port, answers);
         } catch (IOException e) {
             e.printStackTrace();
         }
