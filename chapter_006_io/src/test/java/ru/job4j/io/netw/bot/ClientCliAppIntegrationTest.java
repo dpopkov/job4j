@@ -14,6 +14,8 @@ import static org.junit.Assert.assertThat;
 import static ru.job4j.io.netw.bot.Constants.*;
 
 public class ClientCliAppIntegrationTest {
+    private static final String TEST_HOST = "localhost";
+
     private final int[] testPort = {-1};
 
     @Test
@@ -27,7 +29,7 @@ public class ClientCliAppIntegrationTest {
         while (testPort[0] == -1) {
             Thread.sleep(20);
         }
-        ClientCliApp.main(new String[] {Integer.toString(testPort[0])});
+        ClientCliApp.main(new String[] {TEST_HOST, Integer.toString(testPort[0])});
         List<String> expectedRequests = List.of("test", EXIT_WORD);
         String expectedResponses = String.join(System.lineSeparator(), "test ok", "bye ok", "");
         assertThat(received, is(expectedRequests));

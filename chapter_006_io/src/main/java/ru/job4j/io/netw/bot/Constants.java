@@ -8,7 +8,7 @@ public class Constants {
     public static final int DEFAULT_PORT = 8000;
 
     /** New line string that designates end of client message. */
-    public static final String NL = "\n";
+    public static final String NL = System.lineSeparator();
 
     /** The marker that designates the end of server response. */
     public static final String END = NL + NL;

@@ -5,6 +5,7 @@ import org.junit.Test;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -49,7 +50,7 @@ public class WiseOracleServerAppIntegrationTest {
         String response;
         try (Socket socket = new Socket("localhost", port);
              OutputStream out = socket.getOutputStream();
-             Scanner in = new Scanner(socket.getInputStream())
+             Scanner in = new Scanner(socket.getInputStream(), StandardCharsets.UTF_8)
         ) {
             out.write(request.getBytes());
             response = in.nextLine();

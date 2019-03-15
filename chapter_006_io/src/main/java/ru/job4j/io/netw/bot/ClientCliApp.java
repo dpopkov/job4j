@@ -12,15 +12,17 @@ import static ru.job4j.io.netw.bot.Constants.*;
 public class ClientCliApp {
     /**
      * Main method starting the application.
-     * @param args args[0] - port number
+     * @param args args[0] - host, args[1] - port number
      */
     public static void main(String[] args) {
         int port = DEFAULT_PORT;
-        if (args.length == 1) {
-            port = Integer.parseInt(args[0]);
+        String host = "localhost";
+        if (args.length == 2) {
+            host = args[0];
+            port = Integer.parseInt(args[1]);
         }
         try {
-            Socket socket = new Socket("localhost", port);
+            Socket socket = new Socket(host, port);
             Scanner in = new Scanner(System.in);
             Client client = new Client(socket, in::nextLine, System.out::println);
             client.start();
