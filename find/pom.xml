@@ -11,4 +11,15 @@
 
     <artifactId>find</artifactId>
 
+    <dependencies>
+        <!-- Jimfs - in-memory File System -->
+        <!-- https://mvnrepository.com/artifact/com.google.jimfs/jimfs -->
+        <dependency>
+            <groupId>com.google.jimfs</groupId>
+            <artifactId>jimfs</artifactId>
+            <version>1.1</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
 </project>
