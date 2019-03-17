@@ -23,6 +23,7 @@
     <module>chapter_005</module>
     <module>chapter_006_io</module>
     <module>pack</module>
+    <module>find</module>
   </modules>
   
   <dependencies>
