@@ -1,8 +1,6 @@
 package ru.job4j.io.find;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -13,11 +11,11 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 public class ListWriterTest {
-    private static TestDirWrapper testDirWrapper;
-    private static Path testDir;
+    private TestDirWrapper testDirWrapper;
+    private Path testDir;
 
-    @BeforeClass
-    public static void setupTestDir() throws IOException {
+    @Before
+    public void setupTestDir() throws IOException {
         testDirWrapper = new TestDirWrapper();
         testDir = testDirWrapper.getPath();
     }
@@ -31,8 +29,8 @@ public class ListWriterTest {
         assertThat(readLines, is(List.of("line1", "строка2")));
     }
 
-    @AfterClass
-    public static void cleanTestDir() throws IOException {
+    @After
+    public void cleanTestDir() throws IOException {
         testDirWrapper.clean();
     }
 }

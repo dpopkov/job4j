@@ -1,8 +1,6 @@
 package ru.job4j.io.find;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -14,16 +12,16 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 public class FinderTest {
-    private static TestDirWrapper testDirWrapper;
-    private static Path testDir;
+    private TestDirWrapper testDirWrapper;
+    private Path testDir;
+    private Finder finder;
 
-    @BeforeClass
-    public static void setupTestDir() throws IOException {
+    @Before
+    public void setup() throws IOException {
         testDirWrapper = new TestDirWrapper();
         testDir = testDirWrapper.getPath();
+        finder = new Finder(testDir, 5);
     }
-
-    private final Finder finder = new Finder(testDir, 5);
 
     @Test
     public void whenFindByFullNameThenFindsTheFile() throws IOException {
@@ -79,8 +77,8 @@ public class FinderTest {
         assertThat(result, hasItems(file0, file1, file3));
     }
 
-    @AfterClass
-    public static void cleanTestDir() throws IOException {
+    @After
+    public void cleanTestDir() throws IOException {
         testDirWrapper.clean();
     }
 }
