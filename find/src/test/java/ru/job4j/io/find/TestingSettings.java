@@ -8,18 +8,20 @@ import java.util.Properties;
  * Supporting settings for I/O tests.
  */
 public class TestingSettings {
-    private static Properties props = new Properties();
+    private static final Properties PROPERTIES = new Properties();
 
     static {
-        InputStream in = TestingSettings.class.getResourceAsStream("/test.properties");
-        try {
-            props.load(in);
+        try (InputStream in = TestingSettings.class.getResourceAsStream("/test.properties")) {
+            PROPERTIES.load(in);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    private TestingSettings() {
+    }
+
     public static String testDirProvider() {
-        return props.getProperty("testDirProvider");
+        return PROPERTIES.getProperty("testDirProvider");
     }
 }
