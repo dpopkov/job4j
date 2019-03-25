@@ -24,6 +24,7 @@
     <module>chapter_006_io</module>
     <module>pack</module>
     <module>find</module>
+    <module>chapter_007_db</module>
   </modules>
   
   <dependencies>
