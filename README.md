@@ -13,3 +13,5 @@
 
 --module-path c:\path-to-javafx\javafx-sdk-11\lib  
 --add-modules=javafx.controls,javafx.fxml
+
+В курсе работа производилась в ветках git.
