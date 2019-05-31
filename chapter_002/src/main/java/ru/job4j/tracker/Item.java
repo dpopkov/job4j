@@ -1,7 +1,7 @@
 package ru.job4j.tracker;
 
 /**
- * Represents item for {@link Tracker}.
+ * Represents item for {@link ITracker}.
  */
 public class Item {
     /**

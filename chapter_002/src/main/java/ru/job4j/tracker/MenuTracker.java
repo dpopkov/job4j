@@ -15,7 +15,7 @@ public class MenuTracker {
     /**
      * Tracker of items.
      */
-    private final Tracker tracker;
+    private final ITracker tracker;
     /**
      * Link to object that manages the program cycle.
      * It should be used to exit the program.
@@ -37,7 +37,7 @@ public class MenuTracker {
      * @param input input system
      * @param tracker tracker of items
      */
-    public MenuTracker(Input input, Tracker tracker, Consumer<String> console) {
+    public MenuTracker(Input input, ITracker tracker, Consumer<String> console) {
         this.input = input;
         this.tracker = tracker;
         this.console = console;
@@ -127,7 +127,7 @@ public class MenuTracker {
         }
 
         @Override
-        public void execute(Input input, Tracker tracker) {
+        public void execute(Input input, ITracker tracker) {
             MenuTracker.this.startUI.exit();
         }
     }
@@ -145,7 +145,7 @@ public class MenuTracker {
         }
 
         @Override
-        public void execute(Input input, Tracker tracker) {
+        public void execute(Input input, ITracker tracker) {
             printCaption("Creating new item");
             String name = input.ask("Enter name: ");
             String description = input.ask("Enter description: ");
@@ -170,7 +170,7 @@ public class MenuTracker {
         }
 
         @Override
-        public void execute(Input input, Tracker tracker) {
+        public void execute(Input input, ITracker tracker) {
             printCaption("List of all items");
             List<Item> all = tracker.findAll();
             for (Item item : all) {
@@ -194,7 +194,7 @@ public class MenuTracker {
         }
 
         @Override
-        public void execute(Input input, Tracker tracker) {
+        public void execute(Input input, ITracker tracker) {
             printCaption("Editing item");
             String id = input.ask("Enter id: ");
             String name = input.ask("Enter new name: ");
@@ -222,7 +222,7 @@ public class MenuTracker {
         }
 
         @Override
-        public void execute(Input input, Tracker tracker) {
+        public void execute(Input input, ITracker tracker) {
             printCaption("Deleting item");
             String id = input.ask("Enter id: ");
             if (tracker.delete(id)) {
@@ -249,7 +249,7 @@ class FindItemById extends MenuAction {
     }
 
     @Override
-    public void execute(Input input, Tracker tracker) {
+    public void execute(Input input, ITracker tracker) {
         printCaption("Finding item by id");
         String id = input.ask("Enter id: ");
         Item found = tracker.findById(id);
@@ -277,7 +277,7 @@ class FindItemsByName extends MenuAction {
     }
 
     @Override
-    public void execute(Input input, Tracker tracker) {
+    public void execute(Input input, ITracker tracker) {
         printCaption("Finding item by name");
         String name = input.ask("Enter name: ");
         List<Item> items = tracker.findByName(name);

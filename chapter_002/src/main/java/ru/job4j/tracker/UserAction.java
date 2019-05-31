@@ -15,7 +15,7 @@ public interface UserAction {
      * @param input input system
      * @param tracker tracker of items
      */
-    void execute(Input input, Tracker tracker);
+    void execute(Input input, ITracker tracker);
 
     /**
      * Returns information describing the action.

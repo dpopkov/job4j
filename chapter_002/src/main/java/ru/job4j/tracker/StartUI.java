@@ -14,7 +14,7 @@ public class StartUI {
     /**
      * Storage of items.
      */
-    private final Tracker tracker;
+    private final ITracker tracker;
     /**
      * Flag indicating the current running state of the application.
      */
@@ -30,7 +30,7 @@ public class StartUI {
      * @param input input system
      * @param tracker storage of items
      */
-    public StartUI(Input input, Tracker tracker, Consumer<String> console) {
+    public StartUI(Input input, ITracker tracker, Consumer<String> console) {
         this.input = input;
         this.tracker = tracker;
         this.console = console;

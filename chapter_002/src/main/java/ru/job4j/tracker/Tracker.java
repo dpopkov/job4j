@@ -9,7 +9,7 @@ import java.util.stream.IntStream;
 /**
  * The repository for the list of items that allows to add, delete, replace and find items.
  */
-public class Tracker {
+public class Tracker implements ITracker {
     /**
      * Non-existing index less than lower bound of array.
      */
@@ -25,6 +25,7 @@ public class Tracker {
      * @param item new item
      * @return item with initialized id
      */
+    @Override
     public Item add(Item item) {
         items.add(item);
         item.setId(generateId());
@@ -37,6 +38,7 @@ public class Tracker {
      * @param item new item
      * @return true if replaced item, false otherwise
      */
+    @Override
     public boolean replace(String id, Item item) {
         boolean success = false;
         for (int i = 0; i < items.size(); i++) {
@@ -55,6 +57,7 @@ public class Tracker {
      * @param id id of existing item
      * @return true if item was deleted, false otherwise
      */
+    @Override
     public boolean delete(String id) {
         int foundIndex = findIndexById(id);
         if (foundIndex > NON_EXISTING) {
@@ -68,6 +71,7 @@ public class Tracker {
      * Gets all items in tracker.
      * @return all items
      */
+    @Override
     public List<Item> findAll() {
         return items;
     }
@@ -77,6 +81,7 @@ public class Tracker {
      * @param key name of item
      * @return items with names that equal specified key
      */
+    @Override
     public List<Item> findByName(String key) {
         return items.stream()
                 .filter(item -> item.getName().equals(key))
@@ -88,6 +93,7 @@ public class Tracker {
      * @param id id of item
      * @return found item or null if there is no item with specified id
      */
+    @Override
     public Item findById(String id) {
         int found = findIndexById(id);
         return found > NON_EXISTING ? items.get(found) : null;
