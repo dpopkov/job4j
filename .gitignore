@@ -29,3 +29,5 @@ target/
 
 # Temporary files
 tmp/
+# Temporary files of OpenOffice
+*.ods#
