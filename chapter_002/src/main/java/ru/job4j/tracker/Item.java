@@ -1,5 +1,7 @@
 package ru.job4j.tracker;
 
+import java.util.Objects;
+
 /**
  * Represents item for {@link ITracker}.
  */
@@ -95,5 +97,23 @@ public class Item {
     @Override
     public String toString() {
         return "Item{id='" + id + "', name='" + name + "', desc='" + desc + "'}";
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Item item = (Item) obj;
+        return created == item.created && Objects.equals(id, item.id)
+                && Objects.equals(name, item.name) && Objects.equals(desc, item.desc);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, desc, created);
     }
 }
