@@ -1,8 +1,6 @@
 package ru.job4j.tracker;
 
-import org.junit.AfterClass;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -14,21 +12,19 @@ import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.core.Is.*;
 import static org.junit.Assert.*;
 
-@Ignore("Do not run unless it is necessary to test integration with PostgreSQL")
 public class TrackerSQLIntegrationTest {
     private static final String DB_NAME = "test_item_tracker";
-    private static final String SCRIPT_NAME = "sql/createItemTracker.sql";
     private static final JdbcHelper JDBC_HELPER = JdbcHelper.defaultHelper();
 
     @BeforeClass
     public static void prepareDb() throws IOException, SQLException {
-        JDBC_HELPER.ensureDbExists(DB_NAME, SCRIPT_NAME);
+        JDBC_HELPER.ensureDbExists(DB_NAME, null);
     }
 
     @Test
     public void whenAddItemsThenFindsAddedItems() throws Exception {
-        try (Connection conn = JDBC_HELPER.connectToExistingDb(DB_NAME, SCRIPT_NAME);
-             TrackerSQL tracker = new TrackerSQL(conn)) {
+        try (Connection conn = ConnectionRollback.create(JDBC_HELPER.connectToExistingDb(DB_NAME, null))) {
+            TrackerSQL tracker = new TrackerSQL(conn);
             Item item1 = new Item("name11", "desc1", 1L);
             Item item2 = new Item("name11", "desc2", 2L);
             Item item3 = new Item("name13", "desc3", 3L);
@@ -54,8 +50,8 @@ public class TrackerSQLIntegrationTest {
 
     @Test
     public void whenUpdateDataThenChangesPersist() throws Exception {
-        try (Connection conn = JDBC_HELPER.connectToExistingDb(DB_NAME, SCRIPT_NAME);
-             TrackerSQL tracker = new TrackerSQL(conn)) {
+        try (Connection conn = ConnectionRollback.create(JDBC_HELPER.connectToExistingDb(DB_NAME, null))) {
+            TrackerSQL tracker = new TrackerSQL(conn);
             Item item1 = new Item("name21", "desc1", 1L);
             Item item2 = new Item("name22", "desc2", 2L);
             item1 = tracker.add(item1);
@@ -71,14 +67,6 @@ public class TrackerSQLIntegrationTest {
             assertThat(foundItem2.getName(), is("name_changed"));
             assertThat(foundItem2.getDesc(), is("desc_changed"));
             assertThat(foundItem2.getCreated(), is(22L));
-        }
-    }
-
-    @AfterClass
-    public static void cleanDb() throws Exception {
-        try (Connection conn = JDBC_HELPER.connectToExistingDb(DB_NAME, SCRIPT_NAME);
-             TrackerSQL tracker = new TrackerSQL(conn)) {
-            tracker.deleteAll();
         }
     }
 }
