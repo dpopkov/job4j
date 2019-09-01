@@ -14,7 +14,7 @@ import java.util.Properties;
  */
 public class JdbcHelper {
     public static final String PROPERTIES_FILENAME = "db.properties";
-    @SuppressWarnings("SqlResolve")
+    public static final String PROPERTIES_TRAVIS_FILENAME = "db-on-travis.properties";
     public static final String CHECK_DB_SQL = "SELECT datname FROM pg_catalog.pg_database WHERE lower(datname) = lower(?)";
 
     private static final Logger LOG = LoggerFactory.getLogger(JdbcHelper.class);
@@ -166,6 +166,13 @@ public class JdbcHelper {
      * @return initialized instance
      */
     public static JdbcHelper defaultHelper() {
-        return new JdbcHelper(readProperties(PROPERTIES_FILENAME));
+        String dbProfile = System.getProperty("USED_DB_PROFILE");
+        String propertiesFile;
+        if (dbProfile != null && dbProfile.equals("travis")) {
+            propertiesFile = PROPERTIES_TRAVIS_FILENAME;
+        } else {
+            propertiesFile = PROPERTIES_FILENAME;
+        }
+        return new JdbcHelper(readProperties(propertiesFile));
     }
 }

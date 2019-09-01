@@ -31,6 +31,3 @@ target/
 tmp/
 # Temporary files of OpenOffice
 *.ods#
-
-# Database properties files
-db.properties
