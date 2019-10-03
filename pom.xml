@@ -26,6 +26,7 @@
     <module>pack</module>
     <module>find</module>
     <module>chapter_007_db</module>
+    <module>vacparser</module>
   </modules>
   
   <dependencies>
