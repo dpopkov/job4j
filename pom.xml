@@ -108,6 +108,7 @@
       <id>test</id>
       <properties>
         <db.url>jdbc:postgresql://localhost:5432/test_item_tracker</db.url>
+        <db.vacparser.url>jdbc:postgresql://localhost:5432/test_vacparser</db.vacparser.url>
         <db.username>postgres</db.username>
         <db.password>password</db.password>
         <db.driver>org.postgresql.Driver</db.driver>
@@ -120,6 +121,7 @@
       </activation>
       <properties>
         <db.url>jdbc:postgresql://localhost/test_item_tracker</db.url>
+        <db.vacparser.url>jdbc:postgresql://localhost:5432/test_vacparser</db.vacparser.url>
         <db.username>postgres</db.username>
         <db.password></db.password>
         <db.driver>org.postgresql.Driver</db.driver>
@@ -129,6 +131,7 @@
       <id>production</id>
       <properties>
         <db.url>jdbc:postgresql://localhost:5432/item_tracker</db.url>
+        <db.vacparser.url>jdbc:postgresql://localhost:5432/vacparser</db.vacparser.url>
         <db.username>postgres</db.username>
         <db.password>password</db.password>
         <db.driver>org.postgresql.Driver</db.driver>

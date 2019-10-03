@@ -10,6 +10,7 @@ services:
 
 before_install:
   - psql -c 'create database test_item_tracker;' -U postgres
+  - psql -c 'create database test_vacparser;' -U postgres
 
 env:
   USED_DB_PROFILE=travis
