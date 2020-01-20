@@ -95,12 +95,13 @@
       <version>${log4j.version}</version>
     </dependency>
     <!-- PostgreSQL driver -->
-    <!-- https://mvnrepository.com/artifact/postgresql/postgresql -->
+    <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
     <dependency>
-      <groupId>postgresql</groupId>
+      <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
-      <version>9.1-901-1.jdbc4</version>
+      <version>42.2.9</version>
     </dependency>
+
   </dependencies>
 
   <profiles>
@@ -110,7 +111,7 @@
         <db.url>jdbc:postgresql://localhost:5432/test_item_tracker</db.url>
         <db.vacparser.url>jdbc:postgresql://localhost:5432/test_vacparser</db.vacparser.url>
         <db.username>postgres</db.username>
-        <db.password>password</db.password>
+        <db.password>passwordj</db.password>
         <db.driver>org.postgresql.Driver</db.driver>
       </properties>
     </profile>
@@ -133,7 +134,7 @@
         <db.url>jdbc:postgresql://localhost:5432/item_tracker</db.url>
         <db.vacparser.url>jdbc:postgresql://localhost:5432/vacparser</db.vacparser.url>
         <db.username>postgres</db.username>
-        <db.password>password</db.password>
+        <db.password>passwordj</db.password>
         <db.driver>org.postgresql.Driver</db.driver>
       </properties>
     </profile>
