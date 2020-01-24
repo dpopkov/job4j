@@ -15,22 +15,22 @@ CREATE TABLE "user" (
 CREATE TABLE user_meeting (
 	meeting_id int NOT NULL REFERENCES meeting(id),
 	user_id int NOT NULL REFERENCES "user"(id),
-	status text CHECK (status IN ('confirmed', 'rejected')),
+	status text CHECK (status IN ('accept', 'cancel')),
 	PRIMARY KEY (meeting_id, user_id)
 );
 
 -- Наполнение таблиц
 INSERT INTO "user" ("name") VALUES ('Jack Sparrow'), ('Davy Jones'), ('Hector Barbossa');
 INSERT INTO meeting ("name") VALUES ('Search ships'), ('Destroy ships'), ('Build ships');
-INSERT INTO user_meeting VALUES (1, 1, 'confirmed'), (1, 2, 'confirmed'), (1, 3, 'confirmed');
-INSERT INTO user_meeting VALUES (2, 1, 'rejected'), (2, 2, 'confirmed'), (2, 3, 'confirmed');
+INSERT INTO user_meeting VALUES (1, 1, 'accept'), (1, 2, 'accept'), (1, 3, 'accept');
+INSERT INTO user_meeting VALUES (2, 1, 'cancel'), (2, 2, 'accept'), (2, 3, 'accept');
 
 -- 2. Нужно написать запрос,
 -- который получит список всех заявок и количество подтвердивших участников.
 SELECT meeting."name", count(user_meeting.user_id)
 FROM meeting
 JOIN user_meeting ON meeting.id = user_meeting.meeting_id
-WHERE user_meeting.status = 'confirmed'
+WHERE user_meeting.status = 'accept'
 GROUP BY meeting."name";
 
 -- 3. Нужно получить все совещания, где не было ни одной заявки на посещения
@@ -38,3 +38,29 @@ SELECT meeting."name"
 FROM meeting
 LEFT JOIN user_meeting ON meeting.id = user_meeting.meeting_id
 WHERE user_meeting.user_id IS NULL;
+
+-- Вариант получения всех совещаний, где либо не было ни одной заявки, либо у заявки не было определенного статуса
+SELECT meeting.name
+FROM meeting
+LEFT JOIN user_meeting AS um1 ON meeting.id = um1.meeting_id
+GROUP BY meeting.name, um1.meeting_id
+HAVING (
+	SELECT count(*) FROM user_meeting AS um2
+	WHERE um2.meeting_id = um1.meeting_id AND um2.status IN ('accept', 'cancel')
+) = 0;
+-- Упрощеннй, без группировки:
+SELECT DISTINCT meeting.name
+FROM meeting
+LEFT JOIN user_meeting AS um1 ON meeting.id = um1.meeting_id
+WHERE (
+	SELECT count(*) FROM user_meeting AS um2
+	WHERE um2.meeting_id = um1.meeting_id AND um2.status IN ('accept', 'cancel')
+) = 0;
+--Более упрощенный вариант, который дает такой же результат:
+SELECT meeting.name
+FROM meeting
+WHERE (
+	SELECT count(*) FROM user_meeting
+	WHERE meeting_id = meeting.id AND status IN ('accept', 'cancel')
+) = 0;
+--Этот запрос возвращает те совещания, где совсем не было заявок, либо у заявок пустой статус (NULL)
