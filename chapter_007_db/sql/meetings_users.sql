@@ -64,3 +64,19 @@ WHERE (
 	WHERE meeting_id = meeting.id AND status IN ('accept', 'cancel')
 ) = 0;
 --Этот запрос возвращает те совещания, где совсем не было заявок, либо у заявок пустой статус (NULL)
+
+--Если нужно получить все совещания, где нет ни одной подвтержденной заявки, тогда
+
+--Вариант 1:
+SELECT meeting.name FROM meeting
+WHERE (
+	SELECT count(*) FROM user_meeting
+	WHERE meeting_id = meeting.id AND status = 'accept'
+) = 0;
+
+--Вариант 2:
+SELECT name FROM meeting
+EXCEPT
+SELECT DISTINCT meeting.name FROM meeting
+LEFT JOIN user_meeting ON meeting.id = user_meeting.meeting_id
+WHERE status = 'accept';
