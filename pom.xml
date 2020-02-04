@@ -27,6 +27,7 @@
     <module>find</module>
     <module>chapter_007_db</module>
     <module>vacparser</module>
+    <module>chapter_008_ood</module>
   </modules>
   
   <dependencies>
