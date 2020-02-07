@@ -18,7 +18,10 @@ import java.util.function.Supplier;
 public class InteractCalcMain {
     public static void main(String[] args) {
         InteractCalc calc = new InteractCalc(
-                new ExpressionEvaluator(new Calculate(), new ExpressionParser()),
+                new SimpleExpressionEvaluator(new SimpleExpressionParser(
+                        new ArithmeticCalculatorAdapter(new Calculate()),
+                        new TrigonometricFunctionCalculator())
+                ),
                 new Supplier<>() {
                     private final Scanner in = new Scanner(System.in);
 

@@ -16,9 +16,9 @@ public class InteractCalcMainTest {
     public void whenStartedThenPerformsConsoleInputAndOutput() {
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         System.setOut(new PrintStream(buffer));
-        String input = "3 + 2" + NL + " * 10" + NL + " / 20" + NL + " - 0.7" + NL + "exit";
+        String input = "sin(90)" + NL + " * 50" + NL + " / 20" + NL + " - 0.7" + NL + "exit";
         System.setIn(new ByteArrayInputStream(input.getBytes()));
         InteractCalcMain.main(null);
-        assertThat(buffer.toString(), Matchers.is("Enter expression: 5.0 50.0 2.5 1.8 "));
+        assertThat(buffer.toString(), Matchers.is("Enter expression: 1.0 50.0 2.5 1.8 "));
     }
 }

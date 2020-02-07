@@ -1,5 +1,6 @@
 package ru.job4j.ood.calculator;
 
+
 import org.junit.Before;
 import org.junit.Test;
 import ru.job4j.calculate.Calculate;
@@ -21,7 +22,10 @@ public class InteractCalcTest {
     public void setup() {
         buffer = new StringBuilder();
         calc = new InteractCalc(
-                new ExpressionEvaluator(new Calculate(), new ExpressionParser()),
+                new SimpleExpressionEvaluator(new SimpleExpressionParser(
+                        new ArithmeticCalculatorAdapter(new Calculate()),
+                        new TrigonometricFunctionCalculator())
+                ),
                 buffer::append
         );
     }
@@ -41,6 +45,13 @@ public class InteractCalcTest {
     }
 
     @Test
+    public void whenEmptyInputThenStartFromTheBeginning() {
+        calc.setInput(prepareUserInput("2 * 3", "", "3 / 2", "exit"));
+        calc.start();
+        assertOutput("Enter expression:", "6.0", "Enter expression:", "1.5");
+    }
+
+    @Test
     public void whenAddNumberToResultThenOutputsSum() {
         calc.setInput(prepareUserInput("3 * 4", " + 7", "exit"));
         calc.start();
@@ -52,6 +63,13 @@ public class InteractCalcTest {
         calc.setInput(prepareUserInput("19 - 7", " / 5", " * 10.0", "exit"));
         calc.start();
         assertOutput("Enter expression:", "12.0", "2.4", "24.0");
+    }
+
+    @Test
+    public void whenSinusThenCalculatesSinus() {
+        calc.setInput(prepareUserInput("sin(90)", "exit"));
+        calc.start();
+        assertOutput("Enter expression:", "1.0");
     }
 
     private Supplier<String> prepareUserInput(String... userInput) {
