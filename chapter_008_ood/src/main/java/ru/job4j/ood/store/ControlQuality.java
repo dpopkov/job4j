@@ -3,6 +3,7 @@ package ru.job4j.ood.store;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,5 +35,15 @@ public class ControlQuality {
                 store.add(food);
             }
         }
+    }
+
+    /** Redistributes foods in all stores. */
+    public void resort() {
+        List<Food> redistributedFood = new ArrayList<>();
+        for (Store store : stores) {
+            redistributedFood.addAll(store.takeAll());
+        }
+        redistributedFood.forEach(f -> f.setDiscount(null));
+        sort(redistributedFood);
     }
 }
