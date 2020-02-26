@@ -4,12 +4,14 @@ import org.junit.Before;
 import org.junit.Test;
 import ru.job4j.ood.store.foods.Milk;
 
+import java.lang.reflect.Constructor;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
 import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
 
 public class ControlQualityTest {
     private static final BigDecimal DISCOUNT = BigDecimal.valueOf(0.2);
@@ -31,7 +33,7 @@ public class ControlQualityTest {
 
     @Test
     public void whenShelfLifeLessThan25ThenMoveToWarehouse() {
-        Milk milk = new Milk(now.minusDays(1), now.plusDays(4), null);
+        Milk milk = makeFood(Milk.class, 1, 4);
         control.sort(List.of(milk));
         assertThat(warehouse.takeAll(), contains(milk));
         assertThat(shop.takeAll(), not(contains(milk)));
@@ -40,7 +42,7 @@ public class ControlQualityTest {
 
     @Test
     public void whenShelfLife25To75ThenMoveToShop() {
-        Milk milk = new Milk(now.minusDays(2), now.plusDays(2), null);
+        Milk milk = makeFood(Milk.class, 2, 2);
         control.sort(List.of(milk));
         assertThat(warehouse.takeAll(), not(contains(milk)));
         assertThat(shop.takeAll(), contains(milk));
@@ -49,7 +51,7 @@ public class ControlQualityTest {
 
     @Test
     public void whenShelfLifeGreaterThan75ThenDiscountAndMoveToShop() {
-        Milk milk = new Milk(now.minusDays(4), now.plusDays(1), null);
+        Milk milk = makeFood(Milk.class, 4, 1);
         assertNull(milk.getDiscount());
         control.sort(List.of(milk));
         assertThat(warehouse.takeAll(), not(contains(milk)));
@@ -60,10 +62,21 @@ public class ControlQualityTest {
 
     @Test
     public void whenShelfLifeExpiresThenMoveToTrash() {
-        Milk milk = new Milk(now.minusDays(4), now.minusDays(1), null);
+        Milk milk = makeFood(Milk.class, 4, -1);
         control.sort(List.of(milk));
         assertThat(warehouse.takeAll(), not(contains(milk)));
         assertThat(shop.takeAll(), not(contains(milk)));
         assertThat(trash.takeAll(), contains(milk));
+    }
+
+    private <T extends Food> T makeFood(Class<T> clazz, int createdBefore, int expiresAfter)  {
+        try {
+            Constructor<T> constructor = clazz.getConstructor(LocalDate.class, LocalDate.class, BigDecimal.class);
+            LocalDate created = now.minusDays(createdBefore);
+            LocalDate expires = now.plusDays(expiresAfter);
+            return constructor.newInstance(created, expires, null);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to make food", e);
+        }
     }
 }
