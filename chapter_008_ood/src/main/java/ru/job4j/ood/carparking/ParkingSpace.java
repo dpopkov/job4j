@@ -5,6 +5,10 @@ package ru.job4j.ood.carparking;
  * It can encapsulate one or more parking spots.
  */
 public class ParkingSpace {
+    /** Constructs the parking space and initializes with the specified spots. */
+    public ParkingSpace(Spot... spots) {
+    }
+
     public long getId() {
         return -1;
     }
