@@ -4,6 +4,8 @@ package ru.job4j.ood.carparking;
  * Represents parking service that can serve vehicles of different sizes.
  */
 public class Parking {
+    public static final int DEFAULT_TRUCK_SIZE = 4;
+
     /**
      * Initializes the parking with the specified number of parking spots.
      * @param numCarPlaces number of car parking spots

@@ -3,9 +3,9 @@ package ru.job4j.ood.carparking;
 /**
  * Represents parking spot that can by occupied by a truck.
  */
-public class TrackSpot implements Spot {
+public class TruckSpot implements Spot {
     /** Constructs the track using the specified size. */
-    public TrackSpot(int size) {
+    public TruckSpot(int size) {
     }
 
     @Override

@@ -6,7 +6,7 @@ package ru.job4j.ood.carparking;
  */
 public class ParkingSpace {
     /** Constructs the parking space and initializes with the specified spots. */
-    public ParkingSpace(Spot... spots) {
+    public ParkingSpace(long id, Spot... spots) {
     }
 
     public long getId() {

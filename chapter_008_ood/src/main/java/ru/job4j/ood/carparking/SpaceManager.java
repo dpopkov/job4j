@@ -4,8 +4,7 @@ import java.util.List;
 
 public class SpaceManager implements SpaceFinder {
 
-    /** Creates the space manager and initializes with parking spots. */
-    public SpaceManager(List<Spot> spots) {
+    public void setSpots(List<Spot> spots) {
     }
 
     /** Finds parking space for the specified vehicle. */
