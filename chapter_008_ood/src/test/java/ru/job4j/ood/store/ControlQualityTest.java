@@ -97,6 +97,17 @@ public class ControlQualityTest {
         assertThat(trash.takeAll(), containsInAnyOrder(cheese, meat));
     }
 
+    @Test
+    public void whenFoodAcceptedByTwoStoresThenOnlyOneReceivesIt() {
+        trash = new Trash(distribution.warehouseStrategy());
+        control = new ControlQuality(List.of(warehouse, shop, trash));
+        Milk milk = makeFood(Milk.class, 0, 5);
+        control.sort(List.of(milk));
+        assertTrue(warehouse.contains(milk));
+        assertTrue(shop.isEmpty());
+        assertTrue(trash.isEmpty());
+    }
+
     private <T extends Food> T makeFood(Class<T> clazz, int createdBefore, int expiresAfter)  {
         try {
             Constructor<T> constructor = clazz.getConstructor(LocalDate.class, LocalDate.class, BigDecimal.class);

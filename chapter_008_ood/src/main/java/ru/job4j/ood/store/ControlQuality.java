@@ -33,6 +33,7 @@ public class ControlQuality {
             if (store.accepts(food)) {
                 LOG.trace("{} goes to {}", food, store);
                 store.add(food);
+                break;
             }
         }
     }
