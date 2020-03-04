@@ -9,10 +9,15 @@ import ru.job4j.ood.store.cycle.StoreCycleCalculator;
  * adopted for a specific storage group.
  */
 public class Distribution {
-    private final StoreCycleCalculator cycleCalculator;
+    private StoreCycleCalculator cycleCalculator;
 
     /** Initializes the instance with the specified cycle calculator. */
     public Distribution(StoreCycleCalculator cycleCalculator) {
+        this.cycleCalculator = cycleCalculator;
+    }
+
+    /** Sets the specified cycle calculator. */
+    public void setCycleCalculator(StoreCycleCalculator cycleCalculator) {
         this.cycleCalculator = cycleCalculator;
     }
 

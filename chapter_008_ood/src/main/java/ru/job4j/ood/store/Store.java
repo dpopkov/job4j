@@ -22,4 +22,17 @@ public interface Store {
      * @return list of taken food
      */
     List<Food> takeAll();
+
+    /**
+     * Checks if the store contains the specified food instance.
+     * @param food food to check
+     * @return true if the store contains the food, false otherwise
+     */
+    boolean contains(Food food);
+
+    /**
+     * Checks if the store is empty.
+     * @return true if the store is empty, false otherwise
+     */
+    boolean isEmpty();
 }
