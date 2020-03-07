@@ -3,18 +3,12 @@ package ru.job4j.ood.carparking;
 /**
  * Represents truck.
  */
-public class Truck implements Vehicle {
-    private final String id;
+public class Truck extends Vehicle {
     private final int size;
 
     public Truck(String id, int size) {
-        this.id = id;
+        super(id);
         this.size = size;
-    }
-
-    @Override
-    public String getId() {
-        return id;
     }
 
     @Override
