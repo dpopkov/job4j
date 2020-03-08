@@ -9,6 +9,7 @@ import java.util.Map;
  * Represents parking service that can serve vehicles of different sizes.
  */
 public class Parking {
+    public static final int DEFAULT_CAR_SIZE = 1;
     public static final int DEFAULT_TRUCK_SIZE = 4;
 
     /** Algorithm that finds parking space for any parked vehicle. */
@@ -32,10 +33,10 @@ public class Parking {
     private List<Spot> initSpots(int numCarPlaces, int numTruckPlaces) {
         List<Spot> spots = new ArrayList<>();
         for (int i = 0; i < numCarPlaces; i++) {
-            spots.add(new CarSpot());
+            spots.add(new Spot(DEFAULT_CAR_SIZE));
         }
         for (int i = 0; i < numTruckPlaces; i++) {
-            spots.add(new TruckSpot(DEFAULT_TRUCK_SIZE));
+            spots.add(new Spot(DEFAULT_TRUCK_SIZE));
         }
         return spots;
     }

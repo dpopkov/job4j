@@ -9,7 +9,7 @@ public class TruckTest {
 
     @Test
     public void whenGetIdAndSizeThenReturnsIdAndSize() {
-        Vehicle truck = new Truck("123", 4);
+        Vehicle truck = new Truck(new LicensePlateNumber("123"), 4);
         assertThat(truck.getId(), is("123"));
         assertThat(truck.size(), is(4));
     }

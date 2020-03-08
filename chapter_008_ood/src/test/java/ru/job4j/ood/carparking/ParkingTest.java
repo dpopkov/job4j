@@ -12,7 +12,7 @@ public class ParkingTest {
     @Test
     public void whenCarDrivesInThenGivesTicket() {
         Parking parking = new Parking(1, 0, spaceManager);
-        Car car = new Car("1");
+        Car car = makeCar("1");
         Ticket ticket = parking.driveIn(car);
         assertThat(ticket.getVehicleId(), is("1"));
     }
@@ -20,7 +20,7 @@ public class ParkingTest {
     @Test
     public void whenTruckDrivesInThenGivesTicket() {
         Parking parking = new Parking(0, 1, spaceManager);
-        Truck truck = new Truck("2", DEFAULT_TRUCK_SIZE);
+        Truck truck = makeTruck("2");
         Ticket ticket = parking.driveIn(truck);
         assertThat(ticket.getVehicleId(), is("2"));
     }
@@ -28,8 +28,8 @@ public class ParkingTest {
     @Test
     public void whenCarDrivesInFullParkingThenGivesNoTicket() {
         Parking parking = new Parking(1, 0, spaceManager);
-        Car car1 = new Car("3");
-        Car car2 = new Car("4");
+        Car car1 = makeCar("3");
+        Car car2 = makeCar("4");
         parking.driveIn(car1);
         Ticket ticket = parking.driveIn(car2);
         assertNull(ticket);
@@ -38,8 +38,8 @@ public class ParkingTest {
     @Test
     public void whenTruckDrivesInFullParkingThenGivesNoTicket() {
         Parking parking = new Parking(0, 1, spaceManager);
-        Truck truck1 = new Truck("5", DEFAULT_TRUCK_SIZE);
-        Truck truck2 = new Truck("6", DEFAULT_TRUCK_SIZE);
+        Truck truck1 = makeTruck("5");
+        Truck truck2 = makeTruck("6");
         parking.driveIn(truck1);
         Ticket ticket = parking.driveIn(truck2);
         assertNull(ticket);
@@ -48,7 +48,7 @@ public class ParkingTest {
     @Test
     public void whenTruckDrivesInParkingWithCarSpotsOnlyThenGivesTicket() {
         Parking parking = new Parking(DEFAULT_TRUCK_SIZE, 0, spaceManager);
-        Truck truck = new Truck("7", DEFAULT_TRUCK_SIZE);
+        Truck truck = makeTruck("7");
         Ticket ticket = parking.driveIn(truck);
         assertThat(ticket.getVehicleId(), is("7"));
     }
@@ -56,8 +56,8 @@ public class ParkingTest {
     @Test
     public void whenLeaveByTicketThenAcceptsTicketAndReturnsCar() {
         Parking parking = new Parking(1, 1, spaceManager);
-        Car car = new Car("8");
-        Truck truck = new Truck("9", DEFAULT_TRUCK_SIZE);
+        Car car = makeCar("8");
+        Truck truck = makeTruck("9");
         Ticket carTicket = parking.driveIn(car);
         Ticket truckTicket = parking.driveIn(truck);
         Vehicle returnedCar = parking.leave(carTicket);
@@ -69,11 +69,11 @@ public class ParkingTest {
     @Test
     public void whenLeaveByTicketThenCanAcceptMoreCars() {
         Parking parking = new Parking(DEFAULT_TRUCK_SIZE, 0, spaceManager);
-        Truck truck = new Truck("10", DEFAULT_TRUCK_SIZE);
+        Truck truck = makeTruck("10");
         Ticket truckTicket = parking.driveIn(truck);
         assertThat(truckTicket.getVehicleId(), is("10"));
         parking.leave(truckTicket);
-        Car car = new Car("11");
+        Car car = makeCar("11");
         Ticket carTicket = parking.driveIn(car);
         assertNotNull(carTicket);
         assertThat(carTicket.getVehicleId(), is("11"));
@@ -82,8 +82,16 @@ public class ParkingTest {
     @Test
     public void whenLeaveByInvalidTicketThenReturnsNothing() {
         Parking parking = new Parking(1, 0, spaceManager);
-        parking.driveIn(new Car("12"));
+        parking.driveIn(makeCar("12"));
         Vehicle returnedCar = parking.leave(new Ticket("wrongID", -1));
         assertNull(returnedCar);
+    }
+
+    private Car makeCar(String number) {
+        return new Car(new LicensePlateNumber(number));
+    }
+
+    private Truck makeTruck(String number) {
+        return new Truck(new LicensePlateNumber(number), Parking.DEFAULT_TRUCK_SIZE);
     }
 }

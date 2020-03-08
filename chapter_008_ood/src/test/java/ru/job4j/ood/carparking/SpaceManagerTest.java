@@ -13,11 +13,11 @@ public class SpaceManagerTest {
 
     @Test
     public void whenFindSpaceForSmallVehicleThenFindsOneSpot() {
-        Spot busy = new CarSpot();
+        Spot busy = new Spot();
         busy.occupy();
-        Spot free = new CarSpot();
+        Spot free = new Spot();
         manager.setSpots(List.of(busy, free));
-        Vehicle car = new Car("1");
+        Vehicle car = makeCar();
         ParkingSpace space = manager.findSpaceFor(car);
         assertNotNull(space);
         assertFalse(free.isOccupied());
@@ -27,11 +27,11 @@ public class SpaceManagerTest {
 
     @Test
     public void whenFindSpaceForBigVehicleThenFindsOneBigSpot() {
-        Spot busy = new TruckSpot(TRUCK_SIZE);
+        Spot busy = new Spot(TRUCK_SIZE);
         busy.occupy();
-        Spot free = new TruckSpot(TRUCK_SIZE);
+        Spot free = new Spot(TRUCK_SIZE);
         manager.setSpots(List.of(busy, free));
-        Vehicle truck = new Truck("2", TRUCK_SIZE);
+        Vehicle truck = makeTruck("2", TRUCK_SIZE);
         ParkingSpace space = manager.findSpaceFor(truck);
         assertNotNull(space);
         assertFalse(free.isOccupied());
@@ -41,15 +41,15 @@ public class SpaceManagerTest {
 
     @Test
     public void whenFindSpaceForBigVehicleThenFindsSeveralSmallSpots() {
-        Spot busy1 = new CarSpot();
+        Spot busy1 = new Spot();
         busy1.occupy();
-        Spot free1 = new CarSpot();
-        Spot busy2 = new CarSpot();
+        Spot free1 = new Spot();
+        Spot busy2 = new Spot();
         busy2.occupy();
-        Spot free2 = new CarSpot();
-        Spot free3 = new CarSpot();
+        Spot free2 = new Spot();
+        Spot free3 = new Spot();
         manager.setSpots(List.of(busy1, free1, busy2, free2, free3));
-        Vehicle truck = new Truck("3", 2);
+        Vehicle truck = makeTruck("3", 2);
         ParkingSpace space = manager.findSpaceFor(truck);
         assertNotNull(space);
         assertFalse(free2.isOccupied());
@@ -61,14 +61,22 @@ public class SpaceManagerTest {
 
     @Test
     public void whenFindSpaceForBigVehicleOnSmallSpotThenCannotFind() {
-        Spot busy1 = new CarSpot();
+        Spot busy1 = new Spot();
         busy1.occupy();
-        Spot free1 = new CarSpot();
-        Spot busy2 = new CarSpot();
+        Spot free1 = new Spot();
+        Spot busy2 = new Spot();
         busy2.occupy();
         manager.setSpots(List.of(busy1, free1, busy2));
-        Vehicle truck = new Truck("4", 2);
+        Vehicle truck = makeTruck("4", 2);
         ParkingSpace space = manager.findSpaceFor(truck);
         assertNull(space);
+    }
+
+    private Car makeCar() {
+        return new Car(new LicensePlateNumber("1"));
+    }
+
+    private Truck makeTruck(String number, int size) {
+        return new Truck(new LicensePlateNumber(number), size);
     }
 }
