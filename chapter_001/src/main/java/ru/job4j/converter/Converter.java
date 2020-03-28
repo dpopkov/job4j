@@ -2,8 +2,6 @@ package ru.job4j.converter;
 
 /**
  * Currency converter.
- *
- * @author Denis Popkov
  */
 public class Converter {
 

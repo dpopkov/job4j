@@ -5,8 +5,6 @@ import java.util.Set;
 
 /**
  * Contains method for array checking.
- *
- * @author Denis Popkov
  */
 public class Check {
     /**

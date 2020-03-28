@@ -2,8 +2,6 @@ package ru.job4j.loop;
 
 /**
  * Contains methods for calculating factorial.
- *
- * @author Denis Popkov
  */
 public class Factorial {
     /**

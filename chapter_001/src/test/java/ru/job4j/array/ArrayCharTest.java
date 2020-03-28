@@ -5,9 +5,6 @@ import org.junit.Test;
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.core.Is.is;
 
-/**
- * @author Denis Popkov
- */
 public class ArrayCharTest {
     @Test
     public void whenStartsWithPrefixThenTrue() {

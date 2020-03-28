@@ -2,8 +2,6 @@ package ru.job4j.array;
 
 /**
  * Contains method for array sorting.
- *
- * @author Denis Popkov
  */
 public class BubbleSort {
     /**

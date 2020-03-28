@@ -2,8 +2,6 @@ package ru.job4j.condition;
 
 /**
  * Describes a point in a two-dimensional (X, Y) coordinate system.
- *
- * @author Denis Popkov
  */
 public class Point {
     private final int x;

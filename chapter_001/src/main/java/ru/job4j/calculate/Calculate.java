@@ -4,8 +4,6 @@ package ru.job4j.calculate;
  * Simple calculator that can add, subtract, divide and multiply.
  * The result of the last calculation can be obtained using the {@code getResult}
  * method.
- *
- * @author Denis Popkov
  */
 public class Calculate {
     private double result;

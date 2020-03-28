@@ -2,8 +2,6 @@ package ru.job4j.max;
 
 /**
  * Contains methods for finding the maximum value.
- *
- * @author Denis Popkov
  */
 public class Max {
     /**
@@ -12,6 +10,7 @@ public class Max {
      * @param second second number
      * @return maximum value
      */
+    @SuppressWarnings("ManualMinMaxCalculation")
     public int max(int first, int second) {
         return first > second ? first : second;
     }

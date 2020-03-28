@@ -2,8 +2,6 @@ package ru.job4j.array;
 
 /**
  * Contains method for creating array of squared numbers.
- *
- * @author Denis Popkov
  */
 public class Square {
     /**

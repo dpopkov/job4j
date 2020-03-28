@@ -2,8 +2,6 @@ package ru.job4j.condition;
 
 /**
  * The simplest bot that understands two phrases.
- *
- * @author Denis Popkov
  */
 public class DummyBot {
     /**

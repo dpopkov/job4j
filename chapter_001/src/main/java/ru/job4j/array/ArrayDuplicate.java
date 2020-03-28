@@ -4,8 +4,6 @@ import java.util.Arrays;
 
 /**
  * Contains method for removing duplicates in array.
- *
- * @author Denis Popkov
  */
 public class ArrayDuplicate {
     /**

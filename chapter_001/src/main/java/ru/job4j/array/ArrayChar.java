@@ -2,8 +2,6 @@ package ru.job4j.array;
 
 /**
  * String wrapper.
- *
- * @author Denis Popkov
  */
 public class ArrayChar {
     private final char[] data;

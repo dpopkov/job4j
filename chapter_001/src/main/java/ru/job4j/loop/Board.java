@@ -2,8 +2,6 @@ package ru.job4j.loop;
 
 /**
  * Represents a chess board.
- *
- * @author Denis Popkov
  */
 public class Board {
     private static final String LINE_SEPARATOR = System.lineSeparator();

@@ -2,8 +2,6 @@ package ru.job4j.array;
 
 /**
  * Contains method for merging sorted arrays.
- *
- * @author Denis Popkov
  */
 public class MergeArrays {
     /**

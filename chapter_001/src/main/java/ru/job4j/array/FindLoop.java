@@ -2,8 +2,6 @@ package ru.job4j.array;
 
 /**
  * Contains method for simple loop search.
- *
- * @author Denis Popkov
  */
 public class FindLoop {
     /**

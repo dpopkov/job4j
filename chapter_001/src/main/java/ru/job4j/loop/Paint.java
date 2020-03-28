@@ -4,8 +4,6 @@ import java.util.function.BiPredicate;
 
 /**
  * Contains methods of painting geometric shapes.
- *
- * @author Denis Popkov
  */
 public class Paint {
     private static final String NEW_LINE = System.lineSeparator();

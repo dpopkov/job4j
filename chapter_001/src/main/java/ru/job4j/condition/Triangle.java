@@ -2,8 +2,6 @@ package ru.job4j.condition;
 
 /**
  * Represents triangle.
- *
- * @author Denis Popkov
  */
 public class Triangle {
     private final Point a;

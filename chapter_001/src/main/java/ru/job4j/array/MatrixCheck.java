@@ -2,8 +2,6 @@ package ru.job4j.array;
 
 /**
  * Contains method for checking diagonals of matrix.
- *
- * @author Denis Popkov
  */
 public class MatrixCheck {
     /**

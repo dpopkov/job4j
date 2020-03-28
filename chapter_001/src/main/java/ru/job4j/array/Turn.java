@@ -2,8 +2,6 @@ package ru.job4j.array;
 
 /**
  * Contains method for reversing arrays.
- *
- * @author Denis Popkov
  */
 public class Turn {
     /**

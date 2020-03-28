@@ -7,9 +7,6 @@ import java.util.StringJoiner;
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.core.Is.is;
 
-/**
- * @author Denis Popkov
- */
 public class PaintTest {
     private static final String NEW_LINE = System.lineSeparator();
 

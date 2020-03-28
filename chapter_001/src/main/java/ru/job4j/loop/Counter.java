@@ -2,8 +2,6 @@ package ru.job4j.loop;
 
 /**
  * Contains methods for counting.
- *
- * @author Denis Popkov
  */
 public class Counter {
     /**

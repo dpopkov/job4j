@@ -2,8 +2,6 @@ package ru.job4j.array;
 
 /**
  * Contains method for creating multiplication table.
- *
- * @author Denis Popkov
  */
 public class Matrix {
     /**
