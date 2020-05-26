@@ -24,7 +24,7 @@ public class Game {
     /** Runs the game and displays the outcome. */
     public void run() {
         cycle.start();
-        Mark winner = cycle.getWinner();
+        Mark winner = cycle.winner();
         if (winner != null) {
             output.println(winner + " is the winner");
         } else {

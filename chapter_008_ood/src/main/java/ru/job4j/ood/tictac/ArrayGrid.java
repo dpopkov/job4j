@@ -18,13 +18,13 @@ public class ArrayGrid implements GameGrid {
 
     /** Returns mark at the specified position. */
     @Override
-    public Mark getMark(Position position) {
+    public Mark markAt(Position position) {
         return cells[position.getRow()][position.getCol()];
     }
 
-    /** Sets the specified mark at the specified position. */
+    /** Changes mark of the grid cell at the specified position. */
     @Override
-    public void setMark(Position position, Mark mark) {
+    public void changeCell(Position position, Mark mark) {
         if (!isFreeAt(position)) {
             throw new IllegalStateException("This cell is busy");
         }
@@ -32,13 +32,12 @@ public class ArrayGrid implements GameGrid {
     }
 
     /**
-     * Checks whether the grid has a winner having the specified number
-     * of adjacent marks.
+     * Tries to find a winner having the specified number of adjacent marks.
      * @param lineLength number of adjacent marks that should be on one line.
      * @return mark of the winner or null if there is no winner yet
      */
     @Override
-    public Mark getWinner(int lineLength) {
+    public Mark findWinningMark(int lineLength) {
         Mark result = checkVerticalsAndHorizontals(lineLength);
         if (result != null) {
             return result;

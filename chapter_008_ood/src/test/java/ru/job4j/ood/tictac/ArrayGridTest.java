@@ -17,17 +17,17 @@ public class ArrayGridTest {
     @Test(expected = IllegalStateException.class)
     public void whenSettingBusyCellThenException() {
         setMark(2, 2, Mark.X);
-        assertThat(grid.getMark(new Position(2, 2)), is(Mark.X));
+        assertThat(grid.markAt(new Position(2, 2)), is(Mark.X));
         setMark(2, 2, Mark.O);
     }
 
     @Test
     public void whenNoWinnerThenReturnsNull() {
-        assertNull(grid.getWinner(3));
+        assertNull(grid.findWinningMark(3));
         setMark(0, 0, Mark.X);
         setMark(1, 1, Mark.O);
         setMark(2, 2, Mark.X);
-        assertNull(grid.getWinner(3));
+        assertNull(grid.findWinningMark(3));
     }
 
     @Test
@@ -35,7 +35,7 @@ public class ArrayGridTest {
         setMark(0, 0, Mark.X);
         setMark(1, 0, Mark.X);
         setMark(2, 0, Mark.X);
-        assertThat(grid.getWinner(3), is(Mark.X));
+        assertThat(grid.findWinningMark(3), is(Mark.X));
     }
 
     @Test
@@ -43,7 +43,7 @@ public class ArrayGridTest {
         setMark(1, 0, Mark.O);
         setMark(1, 1, Mark.O);
         setMark(1, 2, Mark.O);
-        assertThat(grid.getWinner(3), is(Mark.O));
+        assertThat(grid.findWinningMark(3), is(Mark.O));
     }
 
     @Test
@@ -51,7 +51,7 @@ public class ArrayGridTest {
         setMark(0, 0, Mark.O);
         setMark(1, 1, Mark.O);
         setMark(2, 2, Mark.O);
-        assertThat(grid.getWinner(3), is(Mark.O));
+        assertThat(grid.findWinningMark(3), is(Mark.O));
     }
 
     @Test
@@ -60,7 +60,7 @@ public class ArrayGridTest {
         setMark(1, 3, Mark.O);
         setMark(2, 2, Mark.O);
         setMark(3, 1, Mark.O);
-        assertThat(grid.getWinner(3), is(Mark.O));
+        assertThat(grid.findWinningMark(3), is(Mark.O));
     }
 
     @Test
@@ -69,7 +69,7 @@ public class ArrayGridTest {
         setMark(1, 0, Mark.X);
         setMark(2, 1, Mark.X);
         setMark(3, 2, Mark.X);
-        assertThat(grid.getWinner(3), is(Mark.X));
+        assertThat(grid.findWinningMark(3), is(Mark.X));
     }
 
     @Test
@@ -78,7 +78,7 @@ public class ArrayGridTest {
         setMark(0, 2, Mark.O);
         setMark(1, 1, Mark.O);
         setMark(2, 0, Mark.O);
-        assertThat(grid.getWinner(3), is(Mark.O));
+        assertThat(grid.findWinningMark(3), is(Mark.O));
     }
 
     @Test
@@ -95,6 +95,6 @@ public class ArrayGridTest {
     }
 
     private void setMark(int r, int c, Mark m) {
-        grid.setMark(new Position(r, c), m);
+        grid.changeCell(new Position(r, c), m);
     }
 }

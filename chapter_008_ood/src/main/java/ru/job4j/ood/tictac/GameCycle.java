@@ -40,16 +40,16 @@ public class GameCycle {
             if (!grid.isFreeAt(move)) {
                 output.print("This cell is busy. ");
             } else {
-                grid.setMark(move, currentPlayer.getMark());
+                grid.changeCell(move, currentPlayer.getMark());
                 output.printGrid(grid);
                 swapPlayers();
-                winner = grid.getWinner(winningLength);
+                winner = grid.findWinningMark(winningLength);
             }
         }
     }
 
     /** Returns the winning mark or null if there is no winner. */
-    public Mark getWinner() {
+    public Mark winner() {
         return winner;
     }
 

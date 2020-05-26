@@ -38,7 +38,7 @@ public class PseudoTextGridFormatter implements GridFormatter {
         buffer.append(VERT_LINE);
         for (int c = 0; c < size; c++) {
             buffer.append(" ");
-            buffer.append(grid.getMark(new Position(row, c)));
+            buffer.append(grid.markAt(new Position(row, c)));
             buffer.append(" ");
             buffer.append(VERT_LINE);
         }

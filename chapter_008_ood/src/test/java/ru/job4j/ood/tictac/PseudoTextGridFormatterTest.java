@@ -14,7 +14,7 @@ public class PseudoTextGridFormatterTest {
     @Test
     public void whenFormatEmptyGridThenReturnBlankCells() {
         GridView grid = mock(GridView.class);
-        when(grid.getMark(any())).thenReturn(Mark.EMPTY);
+        when(grid.markAt(any())).thenReturn(Mark.EMPTY);
         when(grid.size()).thenReturn(3);
         String expected = String.join(NL,
                 "┌───┬───┬───┐",
@@ -32,10 +32,10 @@ public class PseudoTextGridFormatterTest {
     @Test
     public void whenFormatNonEmptyGridThenReturnActualCellsRepresentation() {
         GridView grid = mock(GridView.class);
-        when(grid.getMark(new Position(1, 0))).thenReturn(Mark.EMPTY);
-        when(grid.getMark(new Position(0, 1))).thenReturn(Mark.EMPTY);
-        when(grid.getMark(new Position(0, 0))).thenReturn(Mark.X);
-        when(grid.getMark(new Position(1, 1))).thenReturn(Mark.O);
+        when(grid.markAt(new Position(1, 0))).thenReturn(Mark.EMPTY);
+        when(grid.markAt(new Position(0, 1))).thenReturn(Mark.EMPTY);
+        when(grid.markAt(new Position(0, 0))).thenReturn(Mark.X);
+        when(grid.markAt(new Position(1, 1))).thenReturn(Mark.O);
         when(grid.size()).thenReturn(2);
         String expected = String.join(NL,
                 "┌───┬───┐",
