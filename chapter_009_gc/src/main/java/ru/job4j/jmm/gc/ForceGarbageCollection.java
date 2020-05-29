@@ -12,9 +12,15 @@ public class ForceGarbageCollection {
         if (args.length == 1) {
             numObjects = Integer.parseInt(args[0]);
         }
+        long delay = 1L;
+        if (args.length == 2) {
+            delay = Long.parseLong(args[1]);
+        }
         for (int i = 0; i < numObjects; i++) {
             new User(i);
-            Thread.sleep(1L);
+            if (delay > 0) {
+                Thread.sleep(delay);
+            }
         }
         System.out.println("finish");
     }

@@ -1,10 +1,15 @@
 package ru.job4j.jmm.gc;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Class for memory measurements.
  * It should take 24 bytes in memory.
  */
 class User {
+    private static final Logger LOG = LoggerFactory.getLogger(User.class);
+
     private final long id;
 
     public User(long id) {
@@ -20,6 +25,6 @@ class User {
     @Override
     protected void finalize() throws Throwable {
         super.finalize();
-        System.out.println("finalizing User #" + id);
+        LOG.trace("finalizing User #" + id);
     }
 }
