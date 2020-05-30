@@ -12,6 +12,9 @@
         <Logger name="ru.job4j.jmm.gc.User" level="trace" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
+        <Logger name="ru.job4j.jmm.prof.TrackerLoader" level="info" additivity="false">
+            <AppenderRef ref="Console"/>
+        </Logger>
         <Root level="error">
             <AppenderRef ref="Console"/>
         </Root>
