@@ -8,6 +8,9 @@ import ru.job4j.tracker.Tracker;
 
 import java.util.List;
 
+/**
+ * Loads the {@link Tracker} for research purposes.
+ */
 public class TrackerLoader {
     private static final Logger LOG = LoggerFactory.getLogger(TrackerLoader.class);
 
@@ -23,6 +26,7 @@ public class TrackerLoader {
         this.delayInMs = delayInMs;
     }
 
+    /** Adds fixed amount of items. */
     public void addItems() {
         LOG.info("Starting adding {} items", initialNumItems);
         for (int i = 0; i < initialNumItems; i++) {
@@ -32,6 +36,7 @@ public class TrackerLoader {
         LOG.info("Number of items added to Tracker: {}", initialNumItems);
     }
 
+    /** Replaces fixed amount of items. */
     public void replaceItems() throws InterruptedException {
         LOG.info("Starting replacing {} items", numReplacements);
         for (int i = 0; i < numReplacements; i++) {
