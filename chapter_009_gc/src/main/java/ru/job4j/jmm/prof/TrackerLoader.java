@@ -16,7 +16,7 @@ public class TrackerLoader {
 
     private final ITracker tracker;
     private final int initialNumItems;
-    private final int numReplacements ;
+    private final int numReplacements;
     private final long delayInMs;
 
     public TrackerLoader(ITracker tracker, int initialNumItems, int numReplacements, long delayInMs) {
