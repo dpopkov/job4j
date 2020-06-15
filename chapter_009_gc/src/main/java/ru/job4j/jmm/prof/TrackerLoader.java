@@ -19,7 +19,8 @@ public class TrackerLoader {
     private final int numReplacements;
     private final long delayInMs;
 
-    public TrackerLoader(ITracker tracker, int initialNumItems, int numReplacements, long delayInMs) {
+    public TrackerLoader(ITracker tracker, int initialNumItems,
+                         int numReplacements, long delayInMs) {
         this.tracker = tracker;
         this.initialNumItems = initialNumItems;
         this.numReplacements = numReplacements;
@@ -30,7 +31,8 @@ public class TrackerLoader {
     public void addItems() {
         LOG.info("Starting adding {} items", initialNumItems);
         for (int i = 0; i < initialNumItems; i++) {
-            Item item = new Item("name-" + i, "description-" + i, System.currentTimeMillis());
+            Item item = new Item("name-" + i,
+                    "description-" + i, System.currentTimeMillis());
             tracker.add(item);
         }
         LOG.info("Number of items added to Tracker: {}", initialNumItems);
@@ -43,7 +45,8 @@ public class TrackerLoader {
             List<Item> found = tracker.findByName("name-" + i);
             if (found.size() > 0) {
                 Item item = found.get(0);
-                Item newItem = new Item("new-name-" + i, "description-" + i, System.currentTimeMillis());
+                Item newItem = new Item("new-name-" + i,
+                        "description-" + i, System.currentTimeMillis());
                 tracker.replace(item.getId(), newItem);
                 if (delayInMs > 0) {
                     Thread.sleep(delayInMs);
@@ -63,7 +66,8 @@ public class TrackerLoader {
         if (args.length > 1) {
             numReplacements = Integer.parseInt(args[1]);
             if (numReplacements > numInitial) {
-                throw new IllegalArgumentException("Number of replacements greater than number of items");
+                throw new IllegalArgumentException(
+                        "Number of replacements greater than number of items");
             }
         }
         if (args.length > 2) {
